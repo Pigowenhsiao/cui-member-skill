@@ -27,7 +27,7 @@
 利用 `skills/download_audio.py` 下載影片音訊。
 - **執行指令**：`uv run skills/download_audio.py "<YouTube_URL>"`
 - **必要輸入**：YouTube 影片 URL。
-- 預設會讀取 `.env` 中的 `COOKIES_PATH`（通常為 `tmp/cookies.firefox-private.txt`）以下載會員限定影片。
+- 預設會讀取 `.env` 中的 `COOKIES_PATH`（通常為 `./cookies.txt`）以下載會員限定影片。
 - 執行後，工作目錄下將會生成 `.mp3` 檔案以及包含標題中繼資料的 `.info.json`。
 
 ### Step 2: 判斷與分類整理 (Categorization & Organizing) — `/organize`

@@ -84,7 +84,7 @@ def transcribe_local(audio_path: str) -> str:
     if is_mac_arm:
         print(f"偵測到 Apple Silicon macOS，使用本地 mlx-whisper 進行 GPU 加速語音識別 (音訊: {audio_path})...")
         import mlx_whisper
-        model = os.getenv("WHISPER_MODEL", "mlx-community/whisper-large-v3-mlx")
+        model = os.getenv("WHISPER_MODEL", "mlx-community/whisper-medium-mlx-8bit")
         print(f"載入模型: {model}")
 
         # mlx_whisper は verbose=True のとき segment を stdout に流す。

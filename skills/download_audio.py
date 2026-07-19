@@ -13,17 +13,24 @@ def main():
     parser = argparse.ArgumentParser(description="下載 YouTube 音訊並保留標題等中繼資料 (Metadata)")
     parser.add_argument("url", help="YouTube 影片或播放清單 URL")
     parser.add_argument("--cookies", help="Cookies 檔案路徑", default=None)
+    parser.add_argument("--browser", help="從指定的瀏覽器直接讀取 Cookies (例如 firefox, chrome, safari, edge)", default=None)
     args = parser.parse_args()
 
     # 載入 .env
     load_dotenv()
 
+    browser = args.browser
+    if not browser:
+        browser = os.environ.get("COOKIES_BROWSER", "chrome")
+
     cookies_file = args.cookies
     if not cookies_file:
-        cookies_file = os.environ.get("COOKIES_PATH", "tmp/cookies.firefox-private.txt")
+        cookies_file = os.environ.get("COOKIES_PATH", "./cookies.txt")
 
     print(f"正在從 {args.url} 下載音訊...")
-    if os.path.exists(cookies_file):
+    if browser:
+        print(f"自動讀取瀏覽器 Cookies: {browser}")
+    elif os.path.exists(cookies_file):
         print(f"使用 Cookies 檔案: {cookies_file}")
     else:
         print("未找到或未使用 Cookies 檔案。")
@@ -42,7 +49,9 @@ def main():
         "%(title)s [%(id)s].%(ext)s"
     ]
     
-    if cookies_file and os.path.exists(cookies_file):
+    if browser:
+        cmd.extend(["--cookies-from-browser", browser])
+    elif cookies_file and os.path.exists(cookies_file):
         cmd.extend(["--cookies", cookies_file])
     
     cmd.append(args.url)

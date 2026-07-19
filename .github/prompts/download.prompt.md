@@ -17,6 +17,6 @@ uv run skills/download_audio.py "${input:url}"
 3. 提示使用者可以接著執行 `/organize` 來進行分類整理。
 
 ### 注意
-- 預設會讀取 `.env` 中的 `COOKIES_PATH`（通常為 `tmp/cookies.firefox-private.txt`）以下載會員限定影片。
+- 預設會讀取 `.env` 中的 `COOKIES_PATH`（通常為 `./cookies.txt`）以下載會員限定影片。
 - 如果下載失敗，請檢查 cookies 檔案是否存在且有效，並提醒使用者更新。
 - 所有回覆請使用**繁體中文**。

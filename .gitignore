@@ -160,3 +160,8 @@ __pycache__/
 *.pyc
 .venv/
 .env
+docs/**/*.json
+docs/**/*.txt
+
+cookies.*.txt
+cookies.txt
