@@ -227,3 +227,7 @@ cui-member-skill/
 └── ./
     └── cookies.txt            # Cookies 檔案（已在 Git 中忽略）
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
