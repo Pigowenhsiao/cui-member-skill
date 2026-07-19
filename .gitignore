@@ -141,3 +141,22 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+tmp/*
+temp/*
+
+# Audio files
+*.mp3
+*.wav
+*.m4a
+
+# Docs output (audio files are too large for git)
+docs/**/*.mp3
+docs/**/*.wav
+docs/**/*.m4a
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
