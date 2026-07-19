@@ -13,7 +13,7 @@
 | 英偉達 / 輝達 | NVIDIA | NVDA | 因為打、因偉達、英維達 | GPU 與 AI 晶片龍頭，物理 AI 時代核心受益者 |
 | 台積電 | TSMC | TSM / 2330.TW | 台機電、太極電 | 全球最大晶圓代工廠，先進製程壟斷者 |
 | 美光科技 | Micron Technology | MU | 美觀、美館、每光 | 美國本土 DRAM/NAND 存儲巨頭，HBM 供應商 |
-| SK 海力士 | SK Hynix | — (韓股 / ADR) | 海利斯、海利士、SK嗨力士 | 韓國存儲晶片巨頭，HBM 主要供應商 |
+| SK 海力士 | SK Hynix | SKHY (韓股 / ADR) | 海利斯、海利士、SK嗨力士 | 韓國存儲晶片巨頭，HBM 主要供應商 |
 | 三星電子 | Samsung Electronics | 005930.KS | 三星電字 | 韓國半導體與消費電子巨頭 |
 | 英特爾 | Intel | INTC | 因特爾、應特爾 | 美國老牌晶片廠，18A 製程轉型中 |
 | 超微半導體 | AMD | AMD | — | GPU 與 CPU 設計公司，英偉達主要競爭者 |
@@ -21,7 +21,7 @@
 | 康寧 | Corning | GLW | 康凝、康檸 | 光通訊與特殊玻璃巨頭，穩健防禦型標的 |
 | 博通 | Broadcom | AVGO | 播通、泊通 | 半導體與基礎設施軟體公司 |
 | 甲骨文 | Oracle | ORCL | 加骨文、假骨文 | 企業軟體與雲端基礎設施巨頭 |
-| 特斯拉 | Tesla | TSLA | — | 電動車與機器人公司，「試夢率」代表 |
+| 特斯拉 | Tesla | TSLA | — | 電動車與機器人公司，「市夢率」代表 |
 | 蘋果 | Apple | AAPL | — | 消費電子與服務巨頭，防禦型科技股 |
 | 谷歌 / Alphabet | Google / Alphabet | GOOGL | 古歌、骨哥 | 搜尋引擎、雲端與 AI 大模型 (Gemini) |
 | 微軟 | Microsoft | MSFT | 為軟、威軟 | 雲端 (Azure)、辦公軟體與 AI 投資巨頭 |
@@ -46,13 +46,12 @@
 | 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
 | :--- | :--- | :--- | :--- |
 | OpenAI | OpenAI | OBNI、歐本亞、我本亞 | ChatGPT 開發商，預計 2027 年上市 |
-| Anthropic (Claude) | Anthropic | Astropic、Asropic、SRB、SWAP、艾斯洛比克 | Claude 系列大模型開發商，預計 2026 年 10 月上市 |
-| Claude 3.5 Sonnet | Claude 3.5 Sonnet | Fable 5、Fibre 5、FibrePile | Anthropic 的旗艦 AI 模型 |
-| GPT-4 | GPT-4 | GPDR、CHPT、GPD4 | OpenAI 的大型語言模型 |
+| Anthropic (Claude) | Anthropic | Astropic、Asropic、艾斯洛比克 | Claude 系列大模型開發商，預計 2026 年 10 月上市 |
+| Claude Fable 5 | Claude Fable 5 | Fable 5、Fibre 5、FibrePile | Anthropic 的旗艦 AI 模型 |
+| GPT-5 | GPT-5 | GPDR、CHPT、GPD5 | OpenAI 的大型語言模型 |
 | Gemini | Gemini | 節目奶、潔美尼 | Google 的 AI 大模型系列 |
 | DeepSeek | DeepSeek | deep sick、deep seek、滴普西科 | 中國 AI 公司，開源大模型 |
 | Kimi (月之暗面) | Kimi / Moonshot AI | — | 中國 AI 公司，K3 大模型 |
-| Stripe | Stripe | SWAP (部分語境) | 美國線上支付巨頭，預計 IPO |
 | xAI | xAI | — | 馬斯克旗下 AI 公司 |
 
 ---
@@ -68,7 +67,7 @@
 | 前瞻本益比 | Forward PE | 前瞻批、前瞻適應率 | 基於未來預估 EPS 計算的本益比 |
 | 每股盈餘 (EPS) | Earnings Per Share | — | 公司淨利除以流通股數 |
 | PEG 比率 | PEG Ratio | — | PE 除以 EPS 增長率，衡量成長性估值 |
-| 試夢率 | 「Dream Valuation」 | 是夢率、施夢率 | 講者自創詞，指特斯拉等公司基於未來夢想的極端估值 |
+| 市夢率 | 「Price-to-Dream Ratio」 | 是夢率、施夢率 | 講者根據“市盈率”自創的詞，指特斯拉等公司基於未來願景的極端估值 |
 | 強制平倉 / 強平 | Forced Liquidation | 強評、強坪 | 保證金不足時券商強制賣出持倉 |
 | 融資餘額 | Margin Balance | 溶資餘額 | 投資者向券商借款炒股的總額 |
 | 爆倉 | Margin Call / Blow-up | 報倉、暴倉 | 槓桿帳戶虧損超過保證金被強制清算 |
@@ -102,7 +101,7 @@
 | 黃仁勳 (老黃) | Jensen Huang | 黃潤勳、黃人勛 | NVIDIA 創辦人暨 CEO |
 | 山姆·奧特曼 | Sam Altman | 奧特慢、奧特蠻 | OpenAI CEO |
 | 馬克·扎克伯格 | Mark Zuckerberg | 加克伯格、扎克伯哥 | Meta CEO |
-| 蘇姿丰 | Lisa Su | — | AMD CEO |
+| 蘇姿丰 | Lisa Su | 蘇媽 | AMD CEO |
 | 拉里·埃里森 | Larry Ellison | 拉里、老闆Larry | Oracle 創辦人 |
 | 巴菲特 | Warren Buffett | 拔菲特、巴非特 | 波克夏·海瑟威董事長，價值投資大師 |
 | 佩洛西 | Nancy Pelosi | 配螺旭、配大媽 | 美國眾議院前議長，以股票交易聞名 |
