@@ -57,34 +57,50 @@ def main():
     if not summary_files:
         print("未找到任何摘要筆記 (*.md) 可供同步。")
     
+    # 按照 video_type 進行分組，並找出最新的日期
+    latest_files = {} # video_type -> (date_dir, [filepaths])
     for filepath in summary_files:
         path_parts = filepath.split(os.sep)
         # 例如: ["docs", "會員直播", "20260717", "summary.md"]
         if len(path_parts) >= 4:
             video_type = path_parts[-3]
             date_dir = path_parts[-2]
-            filename = path_parts[-1]
             
-            # Gist 上的檔名：YYYYMMDD_VideoType.md
-            gist_filename = f"{date_dir}_{video_type}.md"
+            if video_type not in latest_files:
+                latest_files[video_type] = (date_dir, [filepath])
+            else:
+                current_latest_date = latest_files[video_type][0]
+                if date_dir > current_latest_date:
+                    latest_files[video_type] = (date_dir, [filepath])
+                elif date_dir == current_latest_date:
+                    latest_files[video_type][1].append(filepath)
             
-            # 避免同資料夾內有多個 md 時互相覆蓋
-            if gist_filename in files_payload:
-                name, _ = os.path.splitext(filename)
-                gist_filename = f"{date_dir}_{video_type}_{name}.md"
-            
+    for video_type, (date_dir, filepaths) in latest_files.items():
+        # Gist 上的檔名改為 VideoType.md，只保留最新的
+        gist_filename = f"{video_type}.md"
+        combined_content = f"> **最後更新**: {date_dir}\n\n"
+        
+        for filepath in sorted(filepaths):
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
                 if not content.strip():
                     content = "\n" 
-                files_payload[gist_filename] = {"content": content}
-            print(f"已載入 {filepath} -> {gist_filename}")
+                
+                # 若同日有多個檔案，加上檔案名稱作為子標題
+                if len(filepaths) > 1:
+                    filename = os.path.basename(filepath)
+                    combined_content += f"## {filename}\n\n"
+                
+                combined_content += content + "\n\n"
+                
+        files_payload[gist_filename] = {"content": combined_content}
+        print(f"已載入 {len(filepaths)} 個檔案 -> {gist_filename} (最新版本: {date_dir})")
             
     if not files_payload:
         print("沒有任何檔案需要同步，程式結束。")
         sys.exit(0)
         
-    # 3. 呼叫 GitHub API 更新 Gist
+    # 4. 呼叫 GitHub API 更新 Gist
     url = f"https://api.github.com/gists/{gist_id}"
     headers = {
         "Accept": "application/vnd.github+json",
@@ -92,6 +108,18 @@ def main():
         "X-GitHub-Api-Version": "2022-11-28"
     }
     
+    # 取得目前的 Gist 狀態，清理舊的冗餘檔案 (例如 YYYYMMDD_*.md)
+    print("\n正在取得目前的 Gist 狀態以清理舊檔案...")
+    get_response = requests.get(url, headers=headers)
+    if get_response.status_code == 200:
+        existing_files = get_response.json().get("files", {})
+        for ext_filename in existing_files:
+            # 如果是 .md 且不在本次更新清單內，且不是 README.md 或 keywords.md，就標記刪除
+            if ext_filename.endswith(".md") and ext_filename not in files_payload:
+                if ext_filename not in ["README.md", "keywords.md", "GIST_README.md"]:
+                    print(f"標記刪除舊檔案: {ext_filename}")
+                    files_payload[ext_filename] = None
+
     print("\n🚀 正在上傳至 GitHub Gist...")
     response = requests.patch(url, headers=headers, json={"files": files_payload})
     

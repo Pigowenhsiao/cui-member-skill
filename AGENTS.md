@@ -56,10 +56,10 @@
 - 將分析與摘要的結果，保存為與文字稿同一目錄下的 `summary.md`。
 
 ### Step 5: 同步至 Gist (Sync to Gist) — `/sync`
-利用 `skills/sync_gist.py` 將生成的會員直播筆記自動同步至 GitHub Gist。
+利用 `skills/sync_gist.py` 將生成的重點筆記自動同步至 GitHub Gist。
 - **執行指令**：`uv run skills/sync_gist.py`
 - **必要輸入**：無。
-- 該腳本會自動抓取 `docs/會員直播/` 下的所有 `.md` 檔案，以及 `docs/GIST_README.md`，並同步上傳。
+- 該腳本會自動抓取 `docs/` 下各分類的最新 `.md` 檔案，並以 `分類名稱.md`（例如：`會員直播.md`）上傳，同時也會同步 `docs/GIST_README.md` 與 `docs/keywords.md`。為保持 Gist 整潔，舊有不再更新的冗餘檔案將會被自動清理。
 - 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
 
 ---

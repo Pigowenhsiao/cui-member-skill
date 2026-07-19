@@ -21,7 +21,7 @@
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
 | `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
-| `/sync` | Step 5: 將生成的會員直播筆記自動同步至 GitHub Gist | （無） |
+| `/sync` | Step 5: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
 
 ---
 
@@ -200,6 +200,7 @@ uv run skills/transcribe.py "./docs/會員直播/20260717/audio_file.mp3"
 依照 `skills/prompts/summarize.md` 的提示詞，讓 AI Agent 讀取 `.txt` 並生成 `summary.md` 報告。
 
 **Step 5: 同步至 Gist (選擇性)**
+將各分類的最新分析報告以 `分類名稱.md`（例如：`會員直播.md`）的格式上傳至 Gist，自動覆蓋並清理舊檔以維持頁面整潔。
 ```bash
 uv run skills/sync_gist.py
 ```
