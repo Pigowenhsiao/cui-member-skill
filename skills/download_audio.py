@@ -20,18 +20,20 @@ def main():
     load_dotenv()
 
     browser = args.browser
-    if not browser:
+    if browser is None:
         browser = os.environ.get("COOKIES_BROWSER", "chrome")
+    if browser and browser.lower() in ("none", "false", ""):
+        browser = None
 
     cookies_file = args.cookies
     if not cookies_file:
         cookies_file = os.environ.get("COOKIES_PATH", "./cookies.txt")
 
     print(f"正在從 {args.url} 下載音訊...")
-    if browser:
-        print(f"自動讀取瀏覽器 Cookies: {browser}")
-    elif os.path.exists(cookies_file):
+    if os.path.exists(cookies_file):
         print(f"使用 Cookies 檔案: {cookies_file}")
+    elif browser:
+        print(f"自動讀取瀏覽器 Cookies: {browser}")
     else:
         print("未找到或未使用 Cookies 檔案。")
 
