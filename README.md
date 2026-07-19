@@ -30,7 +30,7 @@
 
 ---
 
-## 🍎 Mac 版設定（適用 Apple Silicon / Intel）
+## 🍎 Mac 版設定（適用 Apple Silicon M3 或以上）
 
 ### 1. 安裝系統工具
 
@@ -42,37 +42,25 @@ brew install yt-dlp ffmpeg uv
 ### 2. 準備 Cookies 檔案（下載會員限定影片）
 
 要下載會員專屬內容，需要將瀏覽器的 Cookies 傳遞給 yt-dlp。
+基於目前的設定，**系統會自動嘗試從您的瀏覽器（預設為 Chrome）讀取 Cookies**，因此通常情況下您**不需手動匯出 Cookies**，即可直接執行腳本下載。
 
-#### 方法 A：讓 yt-dlp 自動讀取瀏覽器 Cookies（推薦）
-
-yt-dlp 可以直接從瀏覽器中讀取 Cookies。
-
+若您使用的是其他瀏覽器，請在 `.env` 檔案中修改 `COOKIES_BROWSER` 變數：
 ```bash
-# Firefox 的情況
-yt-dlp --cookies-from-browser firefox "https://www.youtube.com/..."
-
-# Chrome 的情況
-yt-dlp --cookies-from-browser chrome "https://www.youtube.com/..."
+# .env 檔案
+COOKIES_BROWSER=firefox  # 支援 chrome, firefox, edge, safari 等
 ```
 
-*(註：本專案的 `skills/download_audio.py` 已支援透過 `--browser` 參數直接呼叫此功能，例如 `--browser chrome`。)*
+#### 特殊情況：手動匯出 Cookies
 
-#### 方法 B：使用瀏覽器擴充功能手動匯出
+只有當自動讀取 Cookies 失敗，或是您基於隱私/環境限制不希望 yt-dlp 直接存取瀏覽器資料時，才需要手動匯出 Cookies。
+詳細的 Cookies 取得方式，請參考 [yt-dlp 官方文件說明](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)。
 
 - **Firefox**：使用 [cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) 擴充功能
 - **Chrome**：使用 [Get cookies.txt LOCALLY](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 擴充功能
   - ⚠️ 注意：「Get cookies.txt」（不含 "LOCALLY" 的版本）曾**被舉報為惡意軟體**，請絕對不要安裝。務必使用帶有 "**LOCALLY**" 字樣的版本。
 
-請將匯出的檔案放置於 `./cookies.txt`。
-
-#### 關於 Cookies 檔案的重要注意事項
-
-根據 yt-dlp 官方 FAQ 說明：
-
-- Cookies 檔案必須為 **Mozilla/Netscape 格式**。
-- 檔案的第一行必須以 `# HTTP Cookie File` 或 `# Netscape HTTP Cookie File` 開頭。
-- **換行字元** 在 macOS/Linux 上請務必使用 **LF (`\n`)**（Windows 則為 CRLF `\r\n`）。若換行字元不正確，可能會導致 `HTTP Error 400: Bad Request`。
-- 該檔案包含了**敏感的登入資訊**，**請絕對不要將其提交（Commit）到 Git 中**（已在 `.gitignore` 中設定排除）。
+請將匯出的檔案放置於 `./cookies.txt`（根據 `.env` 中的 `COOKIES_PATH` 設定）。
+*請注意：Cookies 檔案包含敏感的登入資訊，絕對不要提交（Commit）到 Git 中（已在 `.gitignore` 排除）。*
 
 ### 3. 設定環境變數
 
@@ -89,6 +77,8 @@ cp .env.example .env
 | `COOKIES_PATH` | Cookies 檔案的存放路徑 | `./cookies.txt` |
 | `COOKIES_BROWSER`| 預設從指定瀏覽器自動讀取 Cookies（如 `firefox`, `chrome`）| `chrome` |
 | `OPENAI_API_KEY` | 使用 OpenAI API 模式時為必填 | — |
+
+> ⚠️ **注意 (API 限制)**：當 `WHISPER_MODE` 設定為 `azure`（或 `openai`）時，受限於官方 API 規格，**音訊檔案大小不得超過 25MB**。對於超過此大小的影片（例如長篇直播），請務必切換為 `local` 模式進行轉譯。
 
 ### 4. 關於 Mac 的本地端轉譯模型
 
@@ -126,29 +116,19 @@ winget install yt-dlp ffmpeg
 
 ### 2. 準備 Cookies 檔案（下載會員限定影片）
 
-#### 方法 A：讓 yt-dlp 自動讀取瀏覽器 Cookies（推薦）
+與 Mac 版本相同，**系統會自動嘗試從您的瀏覽器（預設為 Chrome）讀取 Cookies**，因此您**無需進行手動匯出**即可下載會員影片。
 
-在 PowerShell 中執行：
+若需指定其他瀏覽器，請在 `.env` 中設定 `COOKIES_BROWSER`（如 `firefox`）。
 
-```powershell
-# Firefox 的情況
-yt-dlp --cookies-from-browser firefox "https://www.youtube.com/..."
+#### 特殊情況：手動匯出 Cookies
 
-# Chrome 的情況
-yt-dlp --cookies-from-browser chrome "https://www.youtube.com/..."
-```
+只有當自動讀取失敗時，才需要手動使用擴充功能匯出 `cookies.txt`。
+詳細的 Cookies 取得方式，請參考 [yt-dlp 官方文件說明](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)。
 
-> **注意**：這項指令會讀取該瀏覽器中**所有網站**的 Cookie。若有匯出成檔案，**請絕對不要將其提交到 Git 中**（已在 `.gitignore` 設定排除）。
+- **Firefox**：[cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/)
+- **Chrome**：[Get cookies.txt LOCALLY](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc)
 
-#### 方法 B：使用瀏覽器擴充功能手動匯出
-
-- **Firefox**：使用 [cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) 擴充功能
-- **Chrome**：使用 [Get cookies.txt LOCALLY](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 擴充功能
-  - ⚠️ 注意：「Get cookies.txt」（不含 "LOCALLY" 的版本）曾**被舉報為惡意軟體**，請絕對不要安裝。
-
-#### 注意 Cookies 檔案的換行字元
-
-在 Windows 上使用 Cookies 檔案時，請確保換行字元為 **CRLF (`\r\n`)**。如果僅有 LF，可能會發生 `HTTP Error 400: Bad Request` 的錯誤。
+> ⚠️ **注意換行字元**：若您手動匯出 Cookies 檔案並在 Windows 上使用，請確保換行字元為 **CRLF (`\r\n`)**，否則可能會發生 `HTTP Error 400: Bad Request`。
 
 ### 3. 啟動 GPU 容器環境（Docker）
 
@@ -158,15 +138,9 @@ yt-dlp --cookies-from-browser chrome "https://www.youtube.com/..."
 docker-compose up -d
 ```
 
-這將會啟動支援 NVIDIA GPU 的 `ollama` 與 `whisper-gpu` 容器。
+這將會啟動支援 NVIDIA GPU 的 `whisper-gpu` 容器。
 
-### 4. 下載本地端 LLM 模型（Ollama）
-
-```bash
-docker exec -it ollama ollama run gemma4:12b-mlx
-```
-
-### 5. 在 GPU 容器內進行 Whisper 轉譯
+### 4. 在 GPU 容器內進行 Whisper 轉譯
 
 ```bash
 docker exec -it whisper-gpu sh -c "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\$HOME/.local/bin:\$PATH && uv run skills/transcribe.py docs/your-dir/audio.mp3"
@@ -174,7 +148,7 @@ docker exec -it whisper-gpu sh -c "curl -LsSf https://astral.sh/uv/install.sh | 
 
 轉譯完成後，會在同一個資料夾內產出 `.txt` 檔案。
 
-### 6. 設定環境變數
+### 5. 設定環境變數
 
 ```bash
 copy .env.example .env
@@ -189,6 +163,8 @@ copy .env.example .env
 | `COOKIES_BROWSER`| 預設從指定瀏覽器自動讀取 Cookies（如 `firefox`, `chrome`）| `chrome` |
 | `OPENAI_API_KEY` | 使用 OpenAI API 模式時為必填 | — |
 
+> ⚠️ **注意 (API 限制)**：當 `WHISPER_MODE` 設定為 `azure`（或 `openai`）時，受限於官方 API 規格，**音訊檔案大小不得超過 25MB**。對於超過此大小的影片（例如長篇直播），請務必切換為 `local` 模式進行轉譯。
+
 ---
 
 ## 使用方法 (Workflow)
@@ -200,8 +176,9 @@ copy .env.example .env
 **Step 1: 下載音訊**
 ```bash
 uv run skills/download_audio.py "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
-# 若要自動讀取瀏覽器 Cookie
-uv run skills/download_audio.py --browser chrome "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+# 系統將自動讀取 .env 中的 COOKIES_BROWSER 設定（預設為 chrome）
+# 若需要，您也可以透過參數強制指定本次要使用的瀏覽器：
+uv run skills/download_audio.py --browser firefox "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
 ```
 
 **Step 2: 建立分類目錄並移動檔案**（交由 AI Agent 自動判斷）

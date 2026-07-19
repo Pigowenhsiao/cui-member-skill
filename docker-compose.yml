@@ -1,22 +1,6 @@
 version: '3.8'
 
 services:
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-    restart: unless-stopped
-
   whisper-gpu:
     image: pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
     container_name: whisper-gpu
@@ -32,6 +16,3 @@ services:
               capabilities: [gpu]
     restart: unless-stopped
     entrypoint: ["tail", "-f", "/dev/null"]
-
-volumes:
-  ollama_data:
