@@ -162,6 +162,9 @@ __pycache__/
 .env
 docs/**/*.json
 docs/**/*.txt
+docs/**/*.md
+!docs/keywords.md
+!docs/GIST_README.md
 
 cookies.*.txt
 cookies.txt
