@@ -3,27 +3,48 @@
 #     "python-dotenv",
 #     "openai",
 #     "mlx-whisper",
+#     "faster-whisper",
 # ]
 # ///
 import os
 import sys
 import argparse
+import platform
 from dotenv import load_dotenv
 
 def transcribe_local(audio_path):
-    print(f"使用本地 mlx-whisper 進行語音識別 (音訊: {audio_path})...")
-    import mlx_whisper
+    # 偵測是否為 Apple Silicon macOS
+    is_mac_arm = platform.system() == "Darwin" and platform.machine() == "arm64"
     
-    model = os.getenv("WHISPER_MODEL", "mlx-community/whisper-large-v3-mlx")
-    print(f"載入模型: {model}")
-    
-    result = mlx_whisper.transcribe(
-        audio_path,
-        path_or_hf_repo=model,
-        language="zh",
-        verbose=True
-    )
-    return result["text"]
+    if is_mac_arm:
+        print(f"偵測到 Apple Silicon macOS，使用本地 mlx-whisper 進行 GPU 加速語音識別 (音訊: {audio_path})...")
+        import mlx_whisper
+        model = os.getenv("WHISPER_MODEL", "mlx-community/whisper-large-v3-mlx")
+        print(f"載入模型: {model}")
+        
+        result = mlx_whisper.transcribe(
+            audio_path,
+            path_or_hf_repo=model,
+            language="zh",
+            verbose=True
+        )
+        return result["text"]
+    else:
+        print(f"非 Apple Silicon 環境，使用 CPU 版 faster-whisper (型號: medium) 進行語音識別 (音訊: {audio_path})...")
+        from faster_whisper import WhisperModel
+        
+        # CPU 執行，使用 int8 量化減少記憶體並加速
+        model = WhisperModel("medium", device="cpu", compute_type="int8")
+        
+        segments, info = model.transcribe(audio_path, beam_size=5, language="zh")
+        print(f"偵測語言為 '{info.language}'，信心度 {info.language_probability:.2f}")
+        
+        text_list = []
+        for segment in segments:
+            print(f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}")
+            text_list.append(segment.text)
+            
+        return "".join(text_list)
 
 def transcribe_openai(audio_path):
     print(f"使用 OpenAI API 進行語音識別 (音訊: {audio_path})...")

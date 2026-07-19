@@ -5,7 +5,7 @@
 ## 專案設計理念
 - **AI Agent 優先 (Agent-centric)**：專案中的功能被封裝為一系列的 Scripts (Skills)，設計初衷是交由 AI Agent 閱讀 `AGENTS.md` 後自動呼叫與執行，而非完全依賴人類手動輸入指令。
 - **環境隔離**：所有 Python 腳本皆使用 `uv` 管理內聯依賴（Inline dependencies），確保不污染系統全域環境。
-- **靈活的模型切換**：文字轉譯功能（Whisper）支援本地端運算（Mac Apple Silicon 專用的 mlx-whisper）以及雲端 API（OpenAI, Azure）。
+- **靈活的模型切換**：文字轉譯功能（Whisper）支援本地端運算（Mac Apple Silicon 專用的 mlx-whisper，非 ARM Mac 環境則會自動降級為 CPU 版的 `faster-whisper` 搭配 `medium` 模型運作）以及雲端 API（OpenAI, Azure）。
 
 ---
 
@@ -69,10 +69,10 @@ cui-member-skill/
 ├── README.md                  # 本文件
 ├── .env.example               # 環境變數設定範本
 ├── .gitignore                 
-├── docker-compose.yml         # 供 Fallback 使用的 Ollama 服務配置
+├── docker-compose.yml         # Windows Nvidia GPU 專用的 Docker 配置 (Ollama & Whisper-gpu)
 ├── skills/                    # 自動化技能腳本區
 │   ├── download_audio.py      # 音訊與元數據下載
-│   ├── transcribe.py          # 語音轉文字 (支援 Local/OpenAI/Azure)
+│   ├── transcribe.py          # 語音轉文字 (支援 Local/OpenAI/Azure，並有 CPU/GPU 自動適應)
 │   └── prompts/
 │       └── summarize.md       # 給 LLM 的分析提示詞範本
 ├── docs/                      # 產出目錄（按 影片類型/日期 分類存放）
@@ -82,12 +82,28 @@ cui-member-skill/
 
 ---
 
-## 附錄：降級方案 (Fallback for Ollama)
-如果使用者沒有 Claude 或 Copilot 等高階 AI 的訂閱帳號，本專案仍保留了基於 Docker 的本地端 Ollama 服務作為替代方案。
+## 附錄：Windows / NVIDIA GPU (CUDA) 容器執行指南
 
-**啟動 Ollama 服務：**
+若您在 Windows 上擁有 NVIDIA 顯示卡，可以透過 Docker 完整使用 GPU 加速來進行本機端 Whisper 轉譯與 Ollama 推論。
+
+### 1. 啟動 GPU 容器環境
+確認已安裝 WSL2 與 Docker Desktop (含 NVIDIA Container Toolkit)。
+於專案目錄執行：
 ```bash
 docker-compose up -d
+```
+這會啟動內建 NVIDIA GPU 支援的 `ollama` 與 `whisper-gpu` 容器。
+
+### 2. 下載本地 LLM 模型 (Ollama)
+```bash
 docker exec -it ollama ollama run gemma4:12b-mlx
 ```
-您可以使用 [Open WebUI](http://localhost:3080) 介面來貼上文字稿與 `summarize.md` 提示詞，進行本地端的免費摘要生成。
+
+### 3. 在 GPU 容器中執行 Whisper 語音轉文字
+您可以利用 `whisper-gpu` 容器內部的 CUDA 環境來進行轉譯。
+首次執行前，請在容器內安裝 `uv`（因為此容器是隔離的，您可以透過以下單行指令自動完成安裝與轉譯）：
+
+```bash
+docker exec -it whisper-gpu sh -c "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\$HOME/.local/bin:\$PATH && uv run skills/transcribe.py docs/您的目錄/音訊檔案.mp3"
+```
+這會以 GPU 加速完成轉譯，並在相同的資料夾下產出 `.txt` 檔案。
