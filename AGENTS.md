@@ -14,10 +14,14 @@
 > 每個步驟均可透過 `/` 命令獨立執行：
 > | 命令 | 步驟 | 必要輸入 |
 > |------|------|----------|
+> | `/process` | 一鍵執行所有步驟 (Step 1~4) | YouTube URL |
 > | `/download` | Step 1: 下載音訊 | YouTube URL |
 > | `/organize` | Step 2: 分類整理 | `.mp3` 檔案路徑 |
 > | `/transcribe` | Step 3: 語音轉文字 | `.mp3` 檔案路徑 |
 > | `/summarize` | Step 4: 摘要分析 | `.txt` 檔案路徑 |
+
+### 一鍵完整處理 (End-to-End) — `/process`
+如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 4。
 
 ### Step 1: 下載音訊 (Download Audio) — `/download`
 利用 `skills/download_audio.py` 下載影片音訊。
