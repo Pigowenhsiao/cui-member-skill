@@ -8,20 +8,21 @@
 
 ## 你的核心任務與工作流程 (Workflow)
 
-當使用者提供一個 YouTube URL，要求你進行下載、文字轉譯與總結時，請依序執行以下 4 個步驟：
+當使用者提供一個 YouTube URL，要求你進行下載、文字轉譯與總結時，請依序執行以下 5 個步驟：
 
 > **快速指令參考 (Slash Commands)**
 > 每個步驟均可透過 `/` 命令獨立執行：
 > | 命令 | 步驟 | 必要輸入 |
 > |------|------|----------|
-> | `/process` | 一鍵執行所有步驟 (Step 1~4) | YouTube URL |
+> | `/process` | 一鍵執行所有步驟 (Step 1~5) | YouTube URL |
 > | `/download` | Step 1: 下載音訊 | YouTube URL |
 > | `/organize` | Step 2: 分類整理 | `.mp3` 檔案路徑 |
 > | `/transcribe` | Step 3: 語音轉文字 | `.mp3` 檔案路徑 |
 > | `/summarize` | Step 4: 摘要分析 | `.txt` 檔案路徑 |
+> | `/sync` | Step 5: 同步至 Gist | （無） |
 
 ### 一鍵完整處理 (End-to-End) — `/process`
-如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 4。
+如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 5（其中 Step 5 將自動偵測環境變數，僅在已設定的情況下執行）。
 
 ### Step 1: 下載音訊 (Download Audio) — `/download`
 利用 `skills/download_audio.py` 下載影片音訊。
@@ -53,6 +54,13 @@
 - 嚴格遵守 `skills/prompts/summarize.md` 中的指令。特別注意：**語音轉文字可能包含錯別字或同音異義詞，請優先比對 `docs/keywords.md` 進行糾錯，再根據上下文邏輯自行推斷**。
 - 若在分析過程中發現新的高頻關鍵詞或誤識別模式，請將其追加至 `docs/keywords.md`。
 - 將分析與摘要的結果，保存為與文字稿同一目錄下的 `summary.md`。
+
+### Step 5: 同步至 Gist (Sync to Gist) — `/sync`
+利用 `skills/sync_gist.py` 將生成的會員直播筆記自動同步至 GitHub Gist。
+- **執行指令**：`uv run skills/sync_gist.py`
+- **必要輸入**：無。
+- 該腳本會自動抓取 `docs/會員直播/` 下的所有 `.md` 檔案，以及 `docs/GIST_README.md`，並同步上傳。
+- 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
 
 ---
 

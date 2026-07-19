@@ -16,11 +16,12 @@
 
 | 指令 | 功能 | 必要輸入 |
 |------|------|----------|
-| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜4（下載→分類→轉譯→摘要） | YouTube URL |
+| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜5（下載→分類→轉譯→摘要→同步） | YouTube URL |
 | `/download <YouTube URL>` | Step 1: 下載音訊與元數據 | YouTube URL |
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
 | `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
+| `/sync` | Step 5: 將生成的會員直播筆記自動同步至 GitHub Gist | （無） |
 
 ---
 
@@ -77,6 +78,8 @@ cp .env.example .env
 | `COOKIES_PATH` | Cookies 檔案的存放路徑 | `./cookies.txt` |
 | `COOKIES_BROWSER`| 預設從指定瀏覽器自動讀取 Cookies（如 `firefox`, `chrome`）| `chrome` |
 | `OPENAI_API_KEY` | 使用 OpenAI API 模式時為必填 | — |
+| `GITHUB_TOKEN` | 同步 Gist 專用（需包含 `gist` 權限） | — |
+| `GIST_ID` | 同步 Gist 專用（目標 Gist 的 ID） | — |
 
 > ⚠️ **注意 (API 限制)**：當 `WHISPER_MODE` 設定為 `azure`（或 `openai`）時，受限於官方 API 規格，**音訊檔案大小不得超過 25MB**。對於超過此大小的影片（例如長篇直播），請務必切換為 `local` 模式進行轉譯。
 
@@ -162,6 +165,8 @@ copy .env.example .env
 | `COOKIES_PATH` | Cookies 檔案的存放路徑 | `./cookies.txt` |
 | `COOKIES_BROWSER`| 預設從指定瀏覽器自動讀取 Cookies（如 `firefox`, `chrome`）| `chrome` |
 | `OPENAI_API_KEY` | 使用 OpenAI API 模式時為必填 | — |
+| `GITHUB_TOKEN` | 同步 Gist 專用（需包含 `gist` 權限） | — |
+| `GIST_ID` | 同步 Gist 專用（目標 Gist 的 ID） | — |
 
 > ⚠️ **注意 (API 限制)**：當 `WHISPER_MODE` 設定為 `azure`（或 `openai`）時，受限於官方 API 規格，**音訊檔案大小不得超過 25MB**。對於超過此大小的影片（例如長篇直播），請務必切換為 `local` 模式進行轉譯。
 
@@ -193,6 +198,14 @@ uv run skills/transcribe.py "./docs/會員直播/20260717/audio_file.mp3"
 
 **Step 4: 摘要與分析**
 依照 `skills/prompts/summarize.md` 的提示詞，讓 AI Agent 讀取 `.txt` 並生成 `summary.md` 報告。
+
+**Step 5: 同步至 Gist (選擇性)**
+```bash
+uv run skills/sync_gist.py
+```
+> 💡 **如何取得 GitHub Token 與 Gist ID？**
+> 1. **GitHub Token**：前往 GitHub [Personal Access Tokens (classic)](https://github.com/settings/tokens) 頁面，點擊 `Generate new token (classic)`，填寫名稱並**務必勾選 `gist` 權限**，生成後將其填入 `.env`。
+> 2. **Gist ID**：前往 [GitHub Gist](https://gist.github.com/)，隨意建立一個新的 Gist。建立完成後，網址列中 `https://gist.github.com/您的帳號/` 後方的一長串英數代碼即為 `GIST_ID`。
 
 ---
 
