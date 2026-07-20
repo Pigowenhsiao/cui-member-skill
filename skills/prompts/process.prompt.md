@@ -10,7 +10,9 @@ description: '一鍵完成所有任務：下載、分類、轉文字與摘要分
 ### 執行步驟
 
 #### Step 1: 下載音訊
-1. 執行指令：`uv run skills/download_audio.py "${input:url}"`
+1. 根據作業系統執行對應指令：
+   - **Mac**: `uv run skills/download_audio.py "${input:url}"`
+   - **Windows**: `docker exec cui-tools uv run skills/download_audio.py "${input:url}"`
 2. 等待下載完成，確保工作目錄生成了 `.mp3` 與 `.info.json` 檔案。
 
 #### Step 2: 判斷與分類整理
@@ -20,7 +22,9 @@ description: '一鍵完成所有任務：下載、分類、轉文字與摘要分
 4. 將 `.mp3` 與 `.info.json` 移動到該分類目錄下。
 
 #### Step 3: 語音轉文字
-1. 針對剛移動好的檔案，執行指令：`uv run skills/transcribe.py "./docs/<VideoType>/<Date>/<目標音訊檔>.mp3"`
+1. 針對剛移動好的檔案，根據作業系統執行對應指令：
+   - **Mac**: `uv run skills/transcribe.py "./docs/<VideoType>/<Date>/<目標音訊檔>.mp3"`
+   - **Windows**: `docker exec cui-tools uv run skills/transcribe.py "docs/<VideoType>/<Date>/<目標音訊檔>.mp3"`
 2. 等待轉譯完成，確認同目錄下已生成同名的 `.txt` 文字稿檔案。
 
 #### Step 4: 摘要與分析

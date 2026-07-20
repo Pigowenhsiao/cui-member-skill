@@ -5,10 +5,18 @@ description: 'Step 1: 下載 YouTube 影片音訊與中繼資料'
 
 ## 任務：下載音訊 (Download Audio)
 
-請使用以下指令下載使用者指定的 YouTube 影片音訊：
+請根據使用者的作業系統（OS）使用對應的指令下載 YouTube 影片音訊：
 
+### 🍎 Mac 版 (Apple Silicon / Intel)
 ```bash
 uv run skills/download_audio.py "${input:url}"
+```
+
+### 🪟 Windows 版 (完全容器化)
+Windows 採用全容器化運行，需先確保 `cui-tools` 容器已啟動 (`docker compose up -d` 或 `podman compose up -d`)。
+請透過 `docker exec` (或 `podman exec`) 執行指令：
+```bash
+docker exec cui-tools uv run skills/download_audio.py "${input:url}"
 ```
 
 ### 執行後確認事項

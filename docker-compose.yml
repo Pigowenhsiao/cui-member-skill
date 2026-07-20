@@ -1,11 +1,12 @@
 version: '3.8'
 
 services:
-  whisper-gpu:
-    image: pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
-    container_name: whisper-gpu
+  cui-tools:
+    build: .
+    container_name: cui-tools
     volumes:
       - .:/workspace
+      - ./cookies.txt:/workspace/cookies.txt
     working_dir: /workspace
     deploy:
       resources:
@@ -15,4 +16,6 @@ services:
               count: all
               capabilities: [gpu]
     restart: unless-stopped
+    env_file:
+      - .env
     entrypoint: ["tail", "-f", "/dev/null"]

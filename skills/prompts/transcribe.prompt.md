@@ -5,10 +5,17 @@ description: 'Step 3: 使用 Whisper 將音訊轉為文字稿'
 
 ## 任務：語音轉文字 (Transcription)
 
-請使用以下指令將指定的音訊檔案轉為文字稿：
+請根據使用者的作業系統（OS）使用對應的指令，將指定的音訊檔案轉為文字稿：
 
+### 🍎 Mac 版 (Apple Silicon / Intel)
 ```bash
 uv run skills/transcribe.py "${input:audioFilePath}"
+```
+
+### 🪟 Windows 版 (完全容器化)
+Windows 採用全容器化運行，請透過 `docker exec` (或 `podman exec`) 執行指令（請注意路徑需為相對於工作目錄的路徑，如 `docs/會員直播/20260717/xxx.mp3`）：
+```bash
+docker exec cui-tools uv run skills/transcribe.py "${input:audioFilePath}"
 ```
 
 ### 執行後確認事項

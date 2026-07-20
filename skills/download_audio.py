@@ -43,18 +43,19 @@ def main():
     # -o: 指定輸出檔名格式
     cmd = [
         "yt-dlp",
+        "--windows-filenames",
         "-x",
         "--audio-format",
         "mp3",
         "--write-info-json",
         "-o",
-        "%(title)s [%(id)s].%(ext)s"
+        "%(id)s.%(ext)s"
     ]
     
-    if browser:
-        cmd.extend(["--cookies-from-browser", browser])
-    elif cookies_file and os.path.exists(cookies_file):
+    if cookies_file and os.path.exists(cookies_file):
         cmd.extend(["--cookies", cookies_file])
+    elif browser:
+        cmd.extend(["--cookies-from-browser", browser])
     
     cmd.append(args.url)
 

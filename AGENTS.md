@@ -22,45 +22,33 @@
 > | `/sync` | Step 5: 同步至 Gist | （無） |
 
 ### 一鍵完整處理 (End-to-End) — `/process`
-如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 5（其中 Step 5 將自動偵測環境變數，僅在已設定的情況下執行）。
+如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 5。
+> **參閱文件**：`skills/prompts/process.prompt.md`
 
 ### Step 1: 下載音訊 (Download Audio) — `/download`
-利用 `skills/download_audio.py` 下載影片音訊。
-- **執行指令**：`uv run skills/download_audio.py "<YouTube_URL>"`
-- **必要輸入**：YouTube 影片 URL。
-- 預設會讀取 `.env` 中的 `COOKIES_PATH`（通常為 `./cookies.txt`）以下載會員限定影片。
-- 執行後，工作目錄下將會生成 `.mp3` 檔案以及包含標題中繼資料的 `.info.json`。
+利用 `yt-dlp` 下載影片音訊。
+> **參閱文件**：`skills/prompts/download.prompt.md`
 
 ### Step 2: 判斷與分類整理 (Categorization & Organizing) — `/organize`
 **請發揮你的 AI 判斷能力！**
-- **必要輸入**：目標 `.mp3` 檔案的完整路徑。
-- 請讀取指定的 `.mp3` 檔名或對應的 `.info.json` 內容。
-- 根據影片「標題」與「頻道資訊」，推斷該影片的 **影片類型 (Video Type)**（例如：`會員直播`、`大盤分析`、`個股研究` 等，不要僅僅使用頻道名稱，請依據影片內容類型判斷）以及 **日期 (Date)**（例如：`20260717`）。
-- **建立目錄**：根據你的判斷，建立對應的存放目錄，結構為 `./docs/<VideoType>/<Date>/`。
-- **移動檔案**：將剛才下載的 `.mp3` 與 `.info.json` 移動到你建立的目錄下。
+根據影片「標題」與「頻道資訊」，推斷該影片的 **影片類型 (Video Type)** 與 **日期 (Date)**，建立目錄並移動檔案。
+> **參閱文件**：`skills/prompts/organize.prompt.md`
 
 ### Step 3: 語音轉文字 (Transcription) — `/transcribe`
 利用 `skills/transcribe.py` 將整理好的音訊轉為文字。
-- **執行指令**：`uv run skills/transcribe.py "<音訊檔案路徑.mp3>"`
-- **必要輸入**：目標 `.mp3` 檔案的完整路徑。
-- 該腳本會根據 `.env` 中的 `WHISPER_MODE`（`local`、`openai` 或 `azure`）進行文字轉譯，並在同一個目錄下生成同名的 `.txt` 文字稿檔案。
-- **請確保文字稿與音訊檔存放在同一個分類資料夾中。**
+> **參閱文件**：`skills/prompts/transcribe.prompt.md`
 
 ### Step 4: 摘要與分析 (Summarization & Analysis) — `/summarize`
 這一步是你展現分析能力的時候。
-- **必要輸入**：目標 `.txt` 文字稿檔案的完整路徑。
-- **⚠️ 分析前，請先載入 `docs/keywords.md` 關鍵詞彙表**，作為糾正語音辨識錯誤的**第一優先參照依據**。
-- 閱讀指定的文字稿（`.txt`）。
-- 嚴格遵守 `skills/prompts/summarize.md` 中的指令。特別注意：**語音轉文字可能包含錯別字或同音異義詞，請優先比對 `docs/keywords.md` 進行糾錯，再根據上下文邏輯自行推斷**。
-- 若在分析過程中發現新的高頻關鍵詞或誤識別模式，請將其追加至 `docs/keywords.md`。
-- 將分析與摘要的結果，保存為與文字稿同一目錄下的 `summary.md`。
+閱讀指定的文字稿（`.txt`），並根據提示詞生成分析報告。
+> **參閱文件**：`skills/prompts/summarize.prompt.md` 以及 `skills/prompts/summarize.md`
 
 ### Step 5: 同步至 Gist (Sync to Gist) — `/sync`
-利用 `skills/sync_gist.py` 將生成的重點筆記自動同步至 GitHub Gist。
-- **執行指令**：`uv run skills/sync_gist.py`
-- **必要輸入**：無。
-- 該腳本會自動抓取 `docs/` 下各分類的最新 `.md` 檔案，並以 `分類名稱.md`（例如：`會員直播.md`）上傳，同時也會同步 `docs/GIST_README.md` 與 `docs/keywords.md`。為保持 Gist 整潔，舊有不再更新的冗餘檔案將會被自動清理。
-- 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
+將生成的重點筆記自動同步至 GitHub Gist。
+根據作業系統執行對應指令：
+- **Mac**: `uv run skills/sync_gist.py`
+- **Windows**: `docker exec cui-tools uv run skills/sync_gist.py`
+> 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
 
 ---
 

@@ -105,51 +105,47 @@ WHISPER_MODEL=mlx-community/whisper-large-v3-mlx
 
 ---
 
-## 🪟 Windows 版設定（推薦使用 NVIDIA GPU / CUDA）
+## 🪟 Windows 版設定（完全容器化支援 Docker / Podman）
+
+Windows 版本現在採用**完全容器化**架構，不需要在主機上安裝 Python、uv、yt-dlp 或 ffmpeg。只需準備好容器環境即可。
 
 ### 1. 安裝必要工具
 
-- 請安裝 [WSL2](https://learn.microsoft.com/zh-tw/windows/wsl/install) 與 [Docker Desktop](https://www.docker.com/products/docker-desktop/)（包含 NVIDIA Container Toolkit）。
-- 請安裝 `yt-dlp` 與 `ffmpeg`，並將執行檔放置於 `C:\Users\<使用者名稱>\bin` 等目錄中，同時**將其加入環境變數 PATH 中**。
-
-```powershell
-# 使用 winget 進行安裝（在 PowerShell 中執行）
-winget install yt-dlp ffmpeg
-```
+- 請安裝 [Docker Desktop](https://www.docker.com/products/docker-desktop/)（推薦包含 NVIDIA Container Toolkit 以支援 GPU 加速）。
+- （或者）如果不想使用 Docker，也可以安裝 Podman。系統會自動偵測並切換。
 
 ### 2. 準備 Cookies 檔案（下載會員限定影片）
 
-與 Mac 版本相同，**系統會自動嘗試從您的瀏覽器（預設為 Chrome）讀取 Cookies**，因此您**無需進行手動匯出**即可下載會員影片。
-
-若需指定其他瀏覽器，請在 `.env` 中設定 `COOKIES_BROWSER`（如 `firefox`）。
-
-#### 特殊情況：手動匯出 Cookies
-
-只有當自動讀取失敗時，才需要手動使用擴充功能匯出 `cookies.txt`。
+由於容器化環境無法直接讀取本機瀏覽器的 Cookies，要下載會員專屬內容，**必須手動匯出 Cookies**。
 詳細的 Cookies 取得方式，請參考 [yt-dlp 官方文件說明](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies)。
 
-- **Firefox**：[cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/)
-- **Chrome**：[Get cookies.txt LOCALLY](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc)
+- **Firefox**：使用 [cookies.txt](https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/) 擴充功能
+- **Chrome**：使用 [Get cookies.txt LOCALLY](https://chrome.google.com/webstore/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc) 擴充功能
 
-> ⚠️ **注意換行字元**：若您手動匯出 Cookies 檔案並在 Windows 上使用，請確保換行字元為 **CRLF (`\r\n`)**，否則可能會發生 `HTTP Error 400: Bad Request`。
+請將匯出的檔案命名為 `cookies.txt`，並放置於專案根目錄下。
+> ⚠️ **注意換行字元**：請確保換行字元為 **CRLF (`\r\n`)** 或 LF，格式錯誤可能會發生 `HTTP Error 400: Bad Request`。
 
-### 3. 啟動 GPU 容器環境（Docker）
+### 3. 啟動容器環境 (Docker / Podman)
 
 在專案目錄下執行：
 
 ```bash
-docker-compose up -d
+# 預設：啟動支援 NVIDIA GPU 的容器
+docker compose up -d
+
+# 若您的電腦沒有 NVIDIA GPU，請改用 CPU 版本啟動：
+docker compose -f docker-compose.yml -f docker-compose.cpu.yml up -d
 ```
 
-這將會啟動支援 NVIDIA GPU 的 `whisper-gpu` 容器。
+這將會啟動包含 yt-dlp, ffmpeg, uv 等所有必備工具的 `cui-tools` 容器。
 
-### 4. 在 GPU 容器內進行 Whisper 轉譯
+### 4. 在容器內執行腳本
+
+容器啟動後，所有的指令皆透過 `docker exec` (或 `podman exec`) 在 `cui-tools` 容器內執行：
 
 ```bash
-docker exec -it whisper-gpu sh -c "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\$HOME/.local/bin:\$PATH && uv run skills/transcribe.py docs/your-dir/audio.mp3"
+docker exec cui-tools uv run skills/transcribe.py docs/your-dir/audio.mp3
 ```
-
-轉譯完成後，會在同一個資料夾內產出 `.txt` 檔案。
 
 ### 5. 設定環境變數
 
@@ -161,9 +157,9 @@ copy .env.example .env
 
 | 變數名稱 | 說明 |
 |--------|------|
-| `WHISPER_MODE` | `local`（Docker GPU）/ `openai` / `azure` | `local` |
+| `WHISPER_MODE` | `local`（Docker GPU/CPU）/ `openai` / `azure` | `local` |
+| `CONTAINER_RUNTIME`| 指定使用的容器工具，預設留空系統自動偵測 | `docker` |
 | `COOKIES_PATH` | Cookies 檔案的存放路徑 | `./cookies.txt` |
-| `COOKIES_BROWSER`| 預設從指定瀏覽器自動讀取 Cookies（如 `firefox`, `chrome`）| `chrome` |
 | `OPENAI_API_KEY` | 使用 OpenAI API 模式時為必填 | — |
 | `GITHUB_TOKEN` | 同步 Gist 專用（需包含 `gist` 權限） | — |
 | `GIST_ID` | 同步 Gist 專用（目標 Gist 的 ID） | — |
@@ -177,6 +173,8 @@ copy .env.example .env
 **最推薦的方式是將 YouTube URL 直接貼給 AI Agent，並讓其依照 `AGENTS.md` 自動執行任務。**
 
 ### 手動執行步驟（供參考）
+
+> **⚠️ 注意**：以下指令以 Mac 版 (`uv run`) 為例。若您使用 Windows 版，請在所有 `uv run` 指令前方加上 `docker exec cui-tools` (或 `podman exec cui-tools`)。
 
 **Step 1: 下載音訊**
 ```bash
@@ -212,22 +210,28 @@ uv run skills/sync_gist.py
 
 ## 專案結構
 
-```
 cui-member-skill/
 ├── AGENTS.md                  # 給 AI Agent 閱讀的自動化操作手冊
 ├── README.md                  # 本文件
 ├── .env.example               # 環境變數設定範本
 ├── .gitignore
+├── Dockerfile                 # Windows 容器化影像定義檔
 ├── docker-compose.yml         # Windows NVIDIA GPU 專用的 Docker 設定檔
+├── docker-compose.cpu.yml     # Windows CPU 專用的 Docker 設定檔
 ├── skills/                    # 自動化技能腳本
 │   ├── download_audio.py      # 音訊與中繼數據的下載
 │   ├── transcribe.py          # 語音轉文字（支援 Local/OpenAI/Azure，自動判別 CPU/GPU）
-│   └── prompts/
+│   ├── sync_gist.py           # 同步 Gist 的腳本
+│   └── prompts/               # 各階段專屬的 Agent 提示詞與操作說明
+│       ├── process.prompt.md
+│       ├── download.prompt.md
+│       ├── organize.prompt.md
+│       ├── transcribe.prompt.md
+│       ├── summarize.prompt.md
 │       └── summarize.md       # 給 LLM 的分析提示詞範本
 ├── docs/                      # 輸出目錄（按影片類型/日期分類存放）
 └── ./
     └── cookies.txt            # Cookies 檔案（已在 Git 中忽略）
-```
 
 ## License
 
