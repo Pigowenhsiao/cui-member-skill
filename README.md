@@ -16,12 +16,13 @@
 
 | 指令 | 功能 | 必要輸入 |
 |------|------|----------|
-| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜5（下載→分類→轉譯→摘要→同步） | YouTube URL |
+| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜6（下載→分類→轉譯→摘要→同步） | YouTube URL |
 | `/download <YouTube URL>` | Step 1: 下載音訊與元數據 | YouTube URL |
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
 | `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
 | `/sync` | Step 5: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
+| `/archive` | Step 6: 掃描 `./archive` 配下的 Git 專案並同步文件（安全起見需手動 Push） | （無） |
 
 ---
 
@@ -206,6 +207,13 @@ uv run skills/sync_gist.py
 > 1. **GitHub Token**：前往 GitHub [Personal Access Tokens (classic)](https://github.com/settings/tokens) 頁面，點擊 `Generate new token (classic)`，填寫名稱並**務必勾選 `gist` 權限**，生成後將其填入 `.env`。
 > 2. **Gist ID**：前往 [GitHub Gist](https://gist.github.com/)，隨意建立一個新的 Gist。建立完成後，網址列中 `https://gist.github.com/您的帳號/` 後方的一長串英數代碼即為 `GIST_ID`。
 
+**Step 6: アーカイブ同期 (Sync to Archive)**
+若在 `./archive` 目錄下存在您的 Git 存檔專案，此腳本會自動將最新的 `docs/**/*.md` 拷貝至專案內，並自動執行 `git add` 與 `git commit`。
+⚠️ **安全性提示**：為避免在 Docker 容器內掛載 SSH 私鑰帶來潛在的資安風險，本腳本**不會**自動執行 `git push`。請於腳本執行完畢後，手動在主機端推送至 GitHub。
+```bash
+uv run skills/sync_archive.py
+```
+
 ---
 
 ## 專案結構
@@ -222,6 +230,7 @@ cui-member-skill/
 │   ├── download_audio.py      # 音訊與中繼數據的下載
 │   ├── transcribe.py          # 語音轉文字（支援 Local/OpenAI/Azure，自動判別 CPU/GPU）
 │   ├── sync_gist.py           # 同步 Gist 的腳本
+│   ├── sync_archive.py        # 本地 Git 專案同步（歸檔）腳本
 │   └── prompts/               # 各階段專屬的 Agent 提示詞與操作說明
 │       ├── process.prompt.md
 │       ├── download.prompt.md

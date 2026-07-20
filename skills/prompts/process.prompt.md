@@ -5,7 +5,7 @@ description: '一鍵完成所有任務：下載、分類、轉文字與摘要分
 
 ## 任務：全自動影片處理流水線 (End-to-End Pipeline)
 
-這是一鍵執行命令。請你自動依序完成 Step 1 到 Step 4，處理使用者指定的 YouTube 影片。
+這是一鍵執行命令。請你自動依序完成 Step 1 到 Step 6，處理使用者指定的 YouTube 影片。
 
 ### 執行步驟
 
@@ -32,6 +32,18 @@ description: '一鍵完成所有任務：下載、分類、轉文字與摘要分
 2. 嚴格遵守 `#file:skills/prompts/summarize.md` 中的所有指令。
 3. ⚠️ **特別注意：語音轉文字的文本可能包含錯別字、漏字或同音異義詞**，請發揮 AI 判斷力進行合理推斷與糾錯，尤其是財經術語與數字。
 4. 將生成的 Markdown 報告保存為 `./docs/<VideoType>/<Date>/summary.md`。
+
+#### Step 5: 同步至 Gist（選擇性）
+1. 根據作業系統執行對應指令：
+   - **Mac**: `uv run skills/sync_gist.py`
+   - **Windows**: `docker exec cui-tools uv run skills/sync_gist.py`
+2. 若 `.env` 中未設定 `GITHUB_TOKEN` 與 `GIST_ID`，腳本會自動跳過，無需額外處理。
+
+#### Step 6: アーカイブ同期
+1. 根據作業系統執行對應指令：
+   - **Mac**: `uv run skills/sync_archive.py`
+   - **Windows**: `docker exec cui-tools uv run skills/sync_archive.py`
+2. `./archive` 配下にアーカイブ用プロジェクトが存在しない場合は自動的にスキップされる。
 
 ### 執行後確認事項
 - 向使用者回報任務完成，並提供最終的分析重點與結論。

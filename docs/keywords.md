@@ -32,7 +32,7 @@
 | 大火箭 | SpaceX | SPCX | — | 馬斯克旗下太空運輸公司 |
 | 閃迪 | SanDisk / Western Digital | WDC | 山地、散地 | NAND 快閃記憶體公司（妖股特性） |
 | 鎧俠 | Kioxia | — | 凱俠、開下 | 日本 NAND 快閃記憶體公司 (原東芝存儲) |
-| 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新 | 中國國產 DRAM 記憶體龍頭 |
+| 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新、長興科技 | 中國國產 DRAM 記憶體龍頭 |
 | 阿斯麥 | ASML | ASML | 啊死麥、阿司麥 | 荷蘭光刻機壟斷企業 |
 | CrowdStrike | CrowdStrike | CRWD | Crystrike、COWE | 美股網絡安全巨頭 |
 | CoreWeave | CoreWeave | CRWV | Cowive、Cowe | AI 算力雲服務公司 |
@@ -46,13 +46,14 @@
 | 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
 | :--- | :--- | :--- | :--- |
 | OpenAI | OpenAI | OBNI、歐本亞、我本亞 | ChatGPT 開發商，預計 2027 年上市 |
-| Anthropic (Claude) | Anthropic | Astropic、Asropic、艾斯洛比克 | Claude 系列大模型開發商，預計 2026 年 10 月上市 |
+| Anthropic (Claude) | Anthropic | Astropic、Asropic、艾斯洛比克、S-Rope | Claude 系列大模型開發商，預計 2026 年 10 月上市 |
 | Claude Fable 5 | Claude Fable 5 | Fable 5、Fibre 5、FibrePile | Anthropic 的旗艦 AI 模型 |
 | GPT-5 | GPT-5 | GPDR、CHPT、GPD5 | OpenAI 的大型語言模型 |
 | Gemini | Gemini | 節目奶、潔美尼 | Google 的 AI 大模型系列 |
 | DeepSeek | DeepSeek | deep sick、deep seek、滴普西科 | 中國 AI 公司，開源大模型 |
 | Kimi (月之暗面) | Kimi / Moonshot AI | — | 中國 AI 公司，K3 大模型 |
 | xAI | xAI | — | 馬斯克旗下 AI 公司 |
+| 中興通訊 | ZTE | 中信通訊 | 中國通信設備製造巨頭 |
 
 ---
 

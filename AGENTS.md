@@ -14,15 +14,16 @@
 > 每個步驟均可透過 `/` 命令獨立執行：
 > | 命令 | 步驟 | 必要輸入 |
 > |------|------|----------|
-> | `/process` | 一鍵執行所有步驟 (Step 1~5) | YouTube URL |
+> | `/process` | 一鍵執行所有步驟 (Step 1~6) | YouTube URL |
 > | `/download` | Step 1: 下載音訊 | YouTube URL |
 > | `/organize` | Step 2: 分類整理 | `.mp3` 檔案路徑 |
 > | `/transcribe` | Step 3: 語音轉文字 | `.mp3` 檔案路徑 |
 > | `/summarize` | Step 4: 摘要分析 | `.txt` 檔案路徑 |
 > | `/sync` | Step 5: 同步至 Gist | （無） |
+> | `/archive` | Step 6: アーカイブ同期 | （無） |
 
 ### 一鍵完整處理 (End-to-End) — `/process`
-如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 5。
+如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 6。
 > **參閱文件**：`skills/prompts/process.prompt.md`
 
 ### Step 1: 下載音訊 (Download Audio) — `/download`
@@ -49,6 +50,13 @@
 - **Mac**: `uv run skills/sync_gist.py`
 - **Windows**: `docker exec cui-tools uv run skills/sync_gist.py`
 > 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
+
+### Step 6: アーカイブ同期 (Sync to Archive) — `/archive`
+`./archive` 配下に Git プロジェクトが存在する場合、`docs` 内の `.md` ファイルをコピーし、Git コミット＆プッシュを行う。
+根據作業系統執行對應指令：
+- **Mac**: `uv run skills/sync_archive.py`
+- **Windows**: `docker exec cui-tools uv run skills/sync_archive.py`
+> `./archive` 配下にプロジェクトが存在しない場合は何もしない。
 
 ---
 
