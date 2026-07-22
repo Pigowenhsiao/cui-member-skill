@@ -34,7 +34,8 @@
 | 鎧俠 | Kioxia | — | 凱俠、開下 | 日本 NAND 快閃記憶體公司 (原東芝存儲) |
 | 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新、長興科技 | 中國國產 DRAM 記憶體龍頭 |
 | 阿斯麥 | ASML | ASML | 啊死麥、阿司麥 | 荷蘭光刻機壟斷企業 |
-| CrowdStrike | CrowdStrike | CRWD | Crystrike、COWE | 美股網絡安全巨頭 |
+| CrowdStrike | CrowdStrike | CRWD | Crystrike、COWE、Cross Drive | 美股網絡安全巨頭 |
+| Palo Alto Networks | Palo Alto Networks | PANW | Payla Auto | 美股網絡安全巨頭 |
 | CoreWeave | CoreWeave | CRWV | Cowive、Cowe | AI 算力雲服務公司 |
 | Cloudflare | Cloudflare | NET | — | 網路安全與 CDN 服務商 |
 | 波克夏·海瑟威 | Berkshire Hathaway | BRK.B | 博客小哈薩維、波克下、伯克希爾 | 巴菲特旗下控股公司 |
@@ -50,7 +51,7 @@
 | Claude Fable 5 | Claude Fable 5 | Fable 5、Fibre 5、FibrePile | Anthropic 的旗艦 AI 模型 |
 | GPT-5 | GPT-5 | GPDR、CHPT、GPD5 | OpenAI 的大型語言模型 |
 | Gemini | Gemini | 節目奶、潔美尼 | Google 的 AI 大模型系列 |
-| DeepSeek | DeepSeek | deep sick、deep seek、滴普西科 | 中國 AI 公司，開源大模型 |
+| DeepSeek | DeepSeek | deep sick、deep seek、滴普西科、Deepseq | 中國 AI 公司，開源大模型 |
 | Kimi (月之暗面) | Kimi / Moonshot AI | — | 中國 AI 公司，K3 大模型 |
 | xAI | xAI | — | 馬斯克旗下 AI 公司 |
 | 中興通訊 | ZTE | 中信通訊 | 中國通信設備製造巨頭 |
@@ -91,6 +92,9 @@
 | 先進封裝 (CoWoS) | Advanced Packaging (CoWoS) | 先進分裝 | 台積電的先進封裝技術，嚴重供不應求 |
 | HBM (高頻寬記憶體) | High Bandwidth Memory | — | AI 訓練所需的高效能記憶體 |
 | DRAM | Dynamic Random-Access Memory | — | 動態隨機存取記憶體，具週期性 |
+| Blackwell 架構 | Blackwell Architecture | BlackWheel | 英偉達最新一代 AI 晶片架構 |
+| Vera Rubin 架構 | Vera Rubin Architecture | Vero Robin、Robin | 英偉達下一代 AI 晶片架構 |
+| NVL72 機架 | NVL72 | MVL72 | 英偉達機架伺服器系統 |
 | 做空 | Short Selling | 坐空 | 借入股票賣出，期望低價買回獲利 |
 
 ---
@@ -112,6 +116,8 @@
 | 高市早苗 | Takaichi Sanae | — | 日本現任首相 |
 | 鮑威爾 | Jerome Powell | 報位、泡沫 | 前美聯儲主席 |
 | 沃什 (凱文·沃什) | Kevin Warsh | 臥時、臥室、我是 | 現任美聯儲主席 |
+| 達里奧·阿莫戴 | Dario Amodei | 阿莫戴 | Anthropic CEO |
+| 史考特·貝森特 | Scott Bessent | 貝森特 | 美國財政部長 (可能) |
 
 ---
 
@@ -146,6 +152,6 @@
 
 ---
 
-> **最後更新日期**：2026-07-20
-> **資料來源**：會員直播 20260710、20260717；每日要聞 20260716、20260717、20260720
+> **最後更新日期**：2026-07-22
+> **資料來源**：會員直播 20260710、20260717；每日要聞 20260716、20260717、20260720、20260722
 > **維護方式**：每次完成新的 `/summarize` 任務後，若發現新的高頻關鍵詞或誤識別模式，請將其追加至本表。
