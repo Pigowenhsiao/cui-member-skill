@@ -1,6 +1,6 @@
 # CUI Member Skill
 
-本專案提供了一套自動化工具與工作流（Skills），旨在將 **[小翠時政財經](https://www.youtube.com/@cui_news)** （包含「會員直播」與「每日要聞」）以及 **美投侃新闻** 的 YouTube 影片音訊下載、轉譯為文字，並透過 AI Agent（如 Claude、GitHub Copilot、Codex 或 Antigravity）進行各自的重點摘要與投資分析，最後將兩者的觀點進行異同對比與歸檔。
+本專案提供了一套自動化工具與工作流（Skills），旨在將 **[小翠時政財經](https://www.youtube.com/@cui_news)** （包含「會員直播」與「每日要聞」）以及 **[美投侃新闻](https://www.youtube.com/@MeiTouNews)** 的 YouTube 影片音訊下載、轉譯為文字，並透過 AI Agent（如 Claude、GitHub Copilot、Codex 或 Antigravity）進行各自的重點摘要與投資分析，最後將兩者的觀點進行異同對比與歸檔。
 
 ## 專案設計理念
 
@@ -16,7 +16,9 @@
 
 | 指令 | 功能 | 必要輸入 |
 |------|------|----------|
-| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜7（下載→分類→轉譯→摘要→對比→同步） | YouTube URL |
+| `/scan_cui` | 自動檢查小翠最新直播，若未處理則觸發下載與分析 | （無） |
+| `/scan_meitou` | 自動檢查美投侃新闻最新影片，若未處理則觸發下載與分析 | （無） |
+| `/process` | **總管排程 (Orchestrator)**：自動掃描雙頻道，若有新影片則執行分析，並進行觀點對比與同步 | （無） |
 | `/download <YouTube URL>` | Step 1: 下載音訊與元數據 | YouTube URL |
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
@@ -183,7 +185,7 @@ copy .env.example .env
 
 ## 使用方法 (Workflow)
 
-**最推薦的方式是將 YouTube URL 直接貼給 AI Agent，並讓其依照 `AGENTS.md` 自動執行任務。**
+**最推薦的方式是直接使用 `/process` 指令，讓 AI Agent 自動檢查雙頻道並處理所有流程。**
 
 ### 手動執行步驟（供參考）
 

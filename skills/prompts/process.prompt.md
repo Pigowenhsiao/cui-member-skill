@@ -1,56 +1,30 @@
 ---
 mode: 'agent'
-description: '一鍵完成所有任務：下載、分類、轉文字與摘要分析 (全自動)'
+description: '一鍵完成全頻道掃描與任務排程：掃描、下載、分類、轉文字、摘要、對比與同步 (全自動 orchestrator)'
 ---
 
-## 任務：全自動影片處理流水線 (End-to-End Pipeline)
+## 任務：全自動頻道掃描與處理流水線 (Orchestrator)
 
-這是一鍵執行命令。請你自動依序完成 Step 1 到 Step 7，處理使用者指定的 YouTube 影片。
+這是一鍵執行命令，不需要任何參數。請你作為 Orchestrator，自動依序完成以下任務：
 
 ### 執行步驟
 
-#### Step 1: 下載音訊
-1. 根據作業系統執行對應指令：
-   - **Mac**: `uv run skills/download_audio.py "${input:url}"`
-   - **Windows**: `docker exec cui-tools uv run skills/download_audio.py "${input:url}"`
-2. 等待下載完成，確保工作目錄生成了 `.mp3` 與 `.info.json` 檔案。
+#### Step 1: 掃描小翠時政財經 (`/scan_cui`)
+1. 執行 `/scan_cui` 任務 (參考 `skills/prompts/scan_cui.prompt.md`)。
+2. 該任務會去檢查是否有最新影片，若有，會一路執行到摘要產生 (`/download` -> `/organize` -> `/transcribe` -> `/summarize`)。若沒有新影片，則會略過處理。
+3. **請記錄**在 Step 1 中是否有真正下載並產生新的摘要 (`summary.md`)。
 
-#### Step 2: 判斷與分類整理
-1. 讀取剛才下載的 `.info.json` 內容或從 `.mp3` 檔名提取資訊。
-2. 根據標題與頻道資訊推斷 **頻道 (Channel)**、**影片類型 (VideoType)** 與 **日期 (Date)**（格式：`YYYYMMDD`）。若無「小翠時政財經」關鍵字，預設歸類為「美投君」。
-3. 建立分類目錄：`./docs/<Channel>/[<VideoType>/]<Date>/`。
-4. 將 `.mp3` 與 `.info.json` 移動到該分類目錄下。
+#### Step 2: 掃描美投侃新闻 (`/scan_meitou`)
+1. 執行 `/scan_meitou` 任務 (參考 `skills/prompts/scan_meitou.prompt.md`)。
+2. 該任務會去檢查是否有最新影片，若有，會一路執行到摘要產生 (`/download` -> `/organize` -> `/transcribe` -> `/summarize`)。若沒有新影片，則會略過處理。
+3. **請記錄**在 Step 2 中是否有真正下載並產生新的摘要 (`summary.md`)。
 
-#### Step 3: 語音轉文字
-1. 針對剛移動好的檔案，根據作業系統執行對應指令：
-   - **Mac**: `uv run skills/transcribe.py "./docs/<Channel>/[<VideoType>/]<Date>/<目標音訊檔>.mp3"`
-   - **Windows**: `docker exec cui-tools uv run skills/transcribe.py "docs/<Channel>/[<VideoType>/]<Date>/<目標音訊檔>.mp3"`
-2. 等待轉譯完成，確認同目錄下已生成同名的 `.txt` 文字稿檔案。
+#### Step 3: 條件判斷與後續處理
+1. 如果在 **Step 1** 或 **Step 2** 中，**有任何一部新影片**被下載並產生了新摘要：
+   - 執行 `/compare` (參考 `skills/prompts/compare.prompt.md`)，產生最新觀點對比的「新聞綜述」。
+   - 執行 `/sync`，將結果同步至 Gist。
+   - 執行 `/archive`，將結果同步至本地歸檔。
+2. 如果 Step 1 與 Step 2 **都沒有**下載新影片，請向使用者回報「兩頻道皆無新影片，略過後續的對比與同步操作」，並結束此任務。
 
-#### Step 4: 摘要與分析
-1. 閱讀剛才生成的文字稿（`.txt`）。
-2. 嚴格遵守 `#file:skills/prompts/summarize.md` 中的所有指令。
-3. ⚠️ **特別注意：語音轉文字的文本可能包含錯別字、漏字或同音異義詞**，請發揮 AI 判斷力進行合理推斷與糾錯，尤其是財經術語與數字。
-4. 將生成的 Markdown 報告保存為 `./docs/<Channel>/[<VideoType>/]<Date>/summary.md`。
-
-#### Step 5: 觀點對比分析 (Comparative Analysis)
-1. 閱讀各頻道（「小翠時政財經」與「美投侃新闻」）最新生成的摘要報告（`summary.md`）。
-2. 嚴格遵守 `#file:skills/prompts/compare.prompt.md` 中的所有指令，進行觀點對比與異同分析。
-3. 將生成的 Markdown 報告保存為 `./docs/新聞綜述/<最新日期>/summary.md`。
-
-#### Step 6: 同步至 Gist（選擇性）
-1. 根據作業系統執行對應指令：
-   - **Mac**: `uv run skills/sync_gist.py`
-   - **Windows**: `docker exec cui-tools uv run skills/sync_gist.py`
-2. 若 `.env` 中未設定 `GITHUB_TOKEN` 與 `GIST_ID`，腳本會自動跳過，無需額外處理。
-
-#### Step 7: アーカイブ同期
-1. 根據作業系統執行對應指令：
-   - **Mac**: `uv run skills/sync_archive.py`
-   - **Windows**: `docker exec cui-tools uv run skills/sync_archive.py`
-2. `./archive` 配下の任意の名前のアーカイブ用リポジトリが存在しない場合は自動的にスキップされる。
-
-### 執行後確認事項
-- 向使用者回報任務完成，並提供最終的分析重點與結論。
-- 告知所有檔案（音訊、原稿、摘要報告）均已儲存至目標目錄中。
-- 所有回覆請使用**繁體中文**。
+### 注意
+- 所有回報與執行結果請使用**繁體中文**。

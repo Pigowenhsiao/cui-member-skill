@@ -8,13 +8,15 @@
 
 ## 你的核心任務與工作流程 (Workflow)
 
-當使用者提供一個 YouTube URL，要求你進行下載、文字轉譯與總結時，請依序執行以下 7 個步驟：
+當使用者執行 `/process` 總管指令時，請自動掃描雙頻道並處理所有流程。
 
 > **快速指令參考 (Slash Commands)**
 > 每個步驟均可透過 `/` 命令獨立執行：
 > | 命令 | 步驟 | 必要輸入 |
 > |------|------|----------|
-> | `/process` | 一鍵執行所有步驟 (Step 1~7) | YouTube URL |
+> | `/process` | 總管排程 (Orchestrator): 自動掃描雙頻道並執行後續分析與同步 | （無） |
+> | `/scan_cui` | 獨立掃描「小翠時政財經」並處理新影片 | （無） |
+> | `/scan_meitou` | 獨立掃描「美投侃新闻」並處理新影片 | （無） |
 > | `/download` | Step 1: 下載音訊 | YouTube URL |
 > | `/organize` | Step 2: 分類整理 | `.mp3` 檔案路徑 |
 > | `/transcribe` | Step 3: 語音轉文字 | `.mp3` 檔案路徑 |
@@ -23,8 +25,11 @@
 > | `/sync` | Step 6: 同步至 Gist | （無） |
 > | `/archive` | Step 7: アーカイブ同期 | （無） |
 
-### 一鍵完整處理 (End-to-End) — `/process`
-如果你希望 AI Agent 自動幫你包辦所有事情，請使用 `/process` 指令並提供 YouTube URL。Agent 將會為你依序執行以下的 Step 1 到 Step 7。
+### 自動掃描 (Auto-Scan) — `/scan_cui` & `/scan_meitou`
+如果你希望 AI Agent 獨立去 YouTube 抓取個別頻道的最新影片並處理，請使用這兩個指令。
+
+### 一鍵總管排程 (Orchestrator) — `/process`
+如果你希望 AI Agent 自動掃描「小翠時政財經」與「美投侃新闻」，若有新影片則進行處理，最後產生觀點對比並同步，請直接使用無參數的 `/process`。
 > **參閱文件**：`skills/prompts/process.prompt.md`
 
 ### Step 1: 下載音訊 (Download Audio) — `/download`

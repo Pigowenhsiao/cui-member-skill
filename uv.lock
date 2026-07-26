@@ -229,7 +229,7 @@ nvtx = [
 
 [[package]]
 name = "cui-member-skill"
-version = "0.1.0"
+version = "0.1.2"
 source = { virtual = "." }
 dependencies = [
     { name = "faster-whisper" },
