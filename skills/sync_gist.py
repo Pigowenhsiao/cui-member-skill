@@ -81,9 +81,17 @@ def main():
                 elif date_dir == current_latest_date:
                     latest_files[category_name][1].append(filepath)
             
+    # 映射分類名稱到 Gist 上的特定檔名
+    category_to_filename = {
+        "每日新聞綜述": "01_每日新聞綜述.md",
+        "小翠時政財經_每日要聞": "02_小翠每日要聞.md",
+        "小翠時政財經_會員直播": "03_小翠會員直播.md",
+        "美投君": "04_美投君News.md"
+    }
+
     for category_name, (date_dir, filepaths) in latest_files.items():
-        # Gist 上的檔名改為 CategoryName.md，只保留最新的
-        gist_filename = f"{category_name}.md"
+        # 若在對應表中，使用指定的檔名；否則回退到 CategoryName.md
+        gist_filename = category_to_filename.get(category_name, f"{category_name}.md")
         combined_content = f"> **最後更新**: {date_dir}\n\n"
         
         for filepath in sorted(filepaths):

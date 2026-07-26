@@ -1,6 +1,6 @@
 # 🎙️ 小翠時政財經 & 美投侃新闻 — 投資分析與新聞綜述筆記
 
-> 本 Gist 用於自動同步由 `cui-member-skill` 工具所生成的 **[小翠時政財經](https://www.youtube.com/@cui_news)** 與 **美投侃新闻** 影片之精華摘要與投資分析報告。
+> 本 Gist 用於自動同步由 `cui-member-skill` 工具所生成的 **[小翠時政財經](https://www.youtube.com/@cui_news)** 與 **[美投侃新闻](https://www.youtube.com/@MeiTouNews)** 影片之精華摘要與投資分析報告。
 > 除了個別頻道的分析摘要，本 Gist 亦同步提供由 AI 自動比對的「新聞綜述」，分析兩大頻道在宏觀經濟與投資邏輯上的觀點異同。
 
 ---
