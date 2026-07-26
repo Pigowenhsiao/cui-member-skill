@@ -270,6 +270,7 @@ uv run skills/sync_archive.py
 
 ## 專案結構
 
+```
 cui-member-skill/
 ├── AGENTS.md                  # 給 AI Agent 閱讀的自動化操作手冊
 ├── README.md                  # 本文件
@@ -296,6 +297,7 @@ cui-member-skill/
 ├── docs/                      # 輸出目錄（按影片類型/日期分類存放）
 └── ./
     └── cookies.txt            # Cookies 檔案（已在 Git 中忽略）
+```
 
 ## License
 
