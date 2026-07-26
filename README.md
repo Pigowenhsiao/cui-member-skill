@@ -29,6 +29,41 @@
 
 ---
 
+## 🛠️ 技術工作流與生成方式
+
+本專案所有的分析筆記皆由自動化工作流生成，目前的完整執行架構如下：
+
+```mermaid
+graph TD
+    %% 節點定義
+    Orchestrator[總管排程 /process\n自動掃描雙頻道]
+    
+    subgraph 影片處理管線
+        Download(Step 1: download_audio.py\n下載音訊與元數據)
+        Organize(Step 2: organize\n分析中繼資料並歸檔至對應頻道/日期)
+        Transcribe(Step 3: transcribe.py\nWhisper-MLX 語音轉譯)
+        Summarize(Step 4: AI 摘要分析\n套用 keywords.md 糾錯與結構化輸出)
+    end
+    
+    subgraph 綜述與發佈
+        Compare(Step 5: 觀點對比\n產生「每日新聞綜述」)
+        SyncGist(Step 6: sync_gist.py\n同步至 GitHub Gist)
+        SyncArchive(Step 7: sync_archive.py\n提交至本地 Archive 專案)
+    end
+
+    %% 流程線
+    Orchestrator -->|掃描到新影片| Download
+    Download --> Organize
+    Organize --> Transcribe
+    Transcribe --> Summarize
+    
+    Summarize -->|完成所有頻道處理| Compare
+    Compare --> SyncGist
+    SyncGist --> SyncArchive
+```
+
+---
+
 ## 前置需求與安裝
 
 > ⚠️ **Mac 版** 與 **Windows 版** 的設定有所不同，請根據您的系統參考下方對應章節。
