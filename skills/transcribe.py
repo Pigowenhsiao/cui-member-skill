@@ -11,6 +11,8 @@ import os
 import sys
 import argparse
 import platform
+import subprocess
+import tempfile
 from dotenv import load_dotenv
 
 # ---------------------------------------------------------------------------
@@ -41,6 +43,45 @@ def get_audio_duration(audio_path: str) -> float:
         pass
 
     return 0.0
+
+
+def ensure_file_under_limit(audio_path: str, max_bytes: int = 24 * 1024 * 1024) -> tuple[str, bool]:
+    """若音訊檔案超過 max_bytes，自動使用 ffmpeg 動態計算位元率並壓縮為單聲道 16kHz mp3 暫存檔。"""
+    current_size = os.path.getsize(audio_path)
+    if current_size <= max_bytes:
+        return audio_path, False
+
+    print(f"檔案大小 ({current_size} bytes) 超過 24MB API 限制，自動使用 ffmpeg 進行壓縮...", file=sys.stderr)
+    duration = get_audio_duration(audio_path)
+    
+    # 計算位元率 (預留 10% 安全邊界)
+    if duration > 0:
+        target_bps = (max_bytes * 8 * 0.9) / duration
+        bitrate_kbps = max(16, min(64, int(target_bps / 1000)))
+    else:
+        bitrate_kbps = 32
+
+    print(f"動態調降位元率為: {bitrate_kbps}k (採樣率 16kHz 單聲道)", file=sys.stderr)
+
+    temp_file = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False)
+    temp_path = temp_file.name
+    temp_file.close()
+
+    try:
+        subprocess.run(
+            ["ffmpeg", "-y", "-i", audio_path, "-ac", "1", "-ar", "16000", "-b:a", f"{bitrate_kbps}k", temp_path],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        compressed_size = os.path.getsize(temp_path)
+        print(f"壓縮成功，壓縮後大小: {compressed_size} bytes", file=sys.stderr)
+        return temp_path, True
+    except Exception as e:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        raise RuntimeError(f"ffmpeg 壓縮失敗: {e}")
+
 
 
 def format_segments(segments: list) -> str:
@@ -134,13 +175,18 @@ def transcribe_openai(audio_path: str) -> str:
     if not client.api_key:
         raise ValueError("未設定 OPENAI_API_KEY 環境變數。")
 
-    with open(audio_path, "rb") as f:
-        transcript = client.audio.transcriptions.create(
-            model="whisper-1",
-            file=f,
-            language="zh",
-            response_format="verbose_json"  # セグメント情報を取得
-        )
+    target_path, is_temp = ensure_file_under_limit(audio_path)
+    try:
+        with open(target_path, "rb") as f:
+            transcript = client.audio.transcriptions.create(
+                model="whisper-1",
+                file=f,
+                language="zh",
+                response_format="verbose_json"  # セグメント情報を取得
+            )
+    finally:
+        if is_temp and os.path.exists(target_path):
+            os.remove(target_path)
 
     # verbose_json の場合 segments が含まれる
     if hasattr(transcript, "segments") and transcript.segments:
@@ -167,18 +213,24 @@ def transcribe_azure(audio_path: str) -> str:
         azure_endpoint=endpoint
     )
 
-    with open(audio_path, "rb") as f:
-        transcript = client.audio.transcriptions.create(
-            model=deployment,
-            file=f,
-            language="zh",
-            response_format="verbose_json"
-        )
+    target_path, is_temp = ensure_file_under_limit(audio_path)
+    try:
+        with open(target_path, "rb") as f:
+            transcript = client.audio.transcriptions.create(
+                model=deployment,
+                file=f,
+                language="zh",
+                response_format="verbose_json"
+            )
+    finally:
+        if is_temp and os.path.exists(target_path):
+            os.remove(target_path)
 
     if hasattr(transcript, "segments") and transcript.segments:
         seg_dicts = [{"text": s.text} for s in transcript.segments]
         return format_segments(seg_dicts)
     return transcript.text
+
 
 
 # ---------------------------------------------------------------------------

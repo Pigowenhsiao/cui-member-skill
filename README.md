@@ -41,7 +41,18 @@
 brew install yt-dlp ffmpeg uv
 ```
 
-### 2. 準備 Cookies 檔案（下載會員限定影片）
+### 2. 同步 Python 專案與依賴套件
+
+本專案已使用 `uv` 進行專案初始化與套件管理 (`pyproject.toml` / `uv.lock`)。
+取得專案後，請在專案根目錄下執行以下指令以安裝並同步所需的 Python 依賴套件（如 `mlx-whisper`、`openai`、`requests` 等）：
+
+```bash
+uv sync
+```
+
+*註：`uv sync` 會自動建立 `.venv` 虛擬環境並完成所有套件安裝。*
+
+### 3. 準備 Cookies 檔案（下載會員限定影片）
 
 要下載會員專屬內容，需要將瀏覽器的 Cookies 傳遞給 yt-dlp。
 基於目前的設定，**系統會自動嘗試從您的瀏覽器（預設為 Chrome）讀取 Cookies**，因此通常情況下您**不需手動匯出 Cookies**，即可直接執行腳本下載。
@@ -64,7 +75,7 @@ COOKIES_BROWSER=firefox  # 支援 chrome, firefox, edge, safari 等
 請將匯出的檔案放置於 `./cookies.txt`（根據 `.env` 中的 `COOKIES_PATH` 設定）。
 *請注意：Cookies 檔案包含敏感的登入資訊，絕對不要提交（Commit）到 Git 中（已在 `.gitignore` 排除）。*
 
-### 3. 設定環境變數
+### 4. 設定環境變數
 
 ```bash
 cp .env.example .env
@@ -84,7 +95,7 @@ cp .env.example .env
 
 > ⚠️ **注意 (API 限制)**：當 `WHISPER_MODE` 設定為 `azure`（或 `openai`）時，受限於官方 API 規格，**音訊檔案大小不得超過 25MB**。對於超過此大小的影片（例如長篇直播），請務必切換為 `local` 模式進行轉譯。
 
-### 4. 關於 Mac 的本地端轉譯模型
+### 5. 關於 Mac 的本地端轉譯模型
 
 在 Mac（Apple Silicon）上，可以利用 **MLX 框架** 進行高速轉譯。
 
@@ -221,6 +232,8 @@ uv run skills/sync_archive.py
 cui-member-skill/
 ├── AGENTS.md                  # 給 AI Agent 閱讀的自動化操作手冊
 ├── README.md                  # 本文件
+├── pyproject.toml             # uv 專案設定與 Python 依賴定義
+├── uv.lock                    # 依賴版本鎖定檔
 ├── .env.example               # 環境變數設定範本
 ├── .gitignore
 ├── Dockerfile                 # Windows 容器化影像定義檔
