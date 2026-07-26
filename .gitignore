@@ -163,7 +163,6 @@ __pycache__/
 docs/**/*.json
 docs/**/*.txt
 docs/**/*.md
-!docs/keywords.md
 !docs/GIST_README.md
 
 cookies.*.txt
