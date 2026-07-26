@@ -1,6 +1,6 @@
 # CUI Member Skill
 
-本專案提供了一套自動化工具與工作流（Skills），專為 YouTube 頻道 **[小翠時政財經](https://www.youtube.com/@cui_news)** 的付費會員設計，旨在將會員限定影片的音訊下載、轉譯為文字，並透過 AI Agent（如 Claude、GitHub Copilot、Codex 或 Antigravity）進行重點摘要與投資分析整理。
+本專案提供了一套自動化工具與工作流（Skills），旨在將 **[小翠時政財經](https://www.youtube.com/@cui_news)** （包含「會員直播」與「每日要聞」）以及 **美投侃新闻** 的 YouTube 影片音訊下載、轉譯為文字，並透過 AI Agent（如 Claude、GitHub Copilot、Codex 或 Antigravity）進行各自的重點摘要與投資分析，最後將兩者的觀點進行異同對比與歸檔。
 
 ## 專案設計理念
 
@@ -16,13 +16,14 @@
 
 | 指令 | 功能 | 必要輸入 |
 |------|------|----------|
-| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜6（下載→分類→轉譯→摘要→同步） | YouTube URL |
+| `/process <YouTube URL>` | **一鍵完整處理** Steps 1〜7（下載→分類→轉譯→摘要→對比→同步） | YouTube URL |
 | `/download <YouTube URL>` | Step 1: 下載音訊與元數據 | YouTube URL |
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
 | `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
-| `/sync` | Step 5: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
-| `/archive` | Step 6: 掃描 `./archive` 配下的 Git 專案並同步文件（安全起見需手動 Push） | （無） |
+| `/compare` | Step 5: 讀取各頻道最新摘要，產生觀點對比與異同分析 (`新聞綜述`) | （無） |
+| `/sync` | Step 6: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
+| `/archive` | Step 7: 掃描 `./archive` 配下的 Git 專案並同步文件（安全起見需手動 Push） | （無） |
 
 ---
 
@@ -198,19 +199,22 @@ uv run skills/download_audio.py --browser firefox "https://www.youtube.com/watch
 
 **Step 2: 建立分類目錄並移動檔案**（交由 AI Agent 自動判斷）
 ```
-./docs/<VideoType>/<Date>/  例如: ./docs/會員直播/20260717/
+./docs/<Channel>/<VideoType>/<Date>/  例如: ./docs/小翠時政財經/會員直播/20260717/
 ```
 
 **Step 3: 語音轉文字**
 ```bash
-uv run skills/transcribe.py "./docs/會員直播/20260717/audio_file.mp3"
+uv run skills/transcribe.py "./docs/小翠時政財經/會員直播/20260717/audio_file.mp3"
 ```
 
 **Step 4: 摘要與分析**
 依照 `skills/prompts/summarize.md` 的提示詞，讓 AI Agent 讀取 `.txt` 並生成 `summary.md` 報告。
 
-**Step 5: 同步至 Gist (選擇性)**
-將各分類的最新分析報告以 `分類名稱.md`（例如：`會員直播.md`）的格式上傳至 Gist，自動覆蓋並清理舊檔以維持頁面整潔。
+**Step 5: 觀點對比分析 (新聞綜述)**
+根據 `skills/prompts/compare.prompt.md` 的指示，讓 AI Agent 比較最新的「小翠時政財經」與「美投侃新闻」摘要，產生對比分析報告。
+
+**Step 6: 同步至 Gist (選擇性)**
+將各分類的最新分析報告與新聞綜述上傳至 Gist，自動覆蓋並清理舊檔以維持頁面整潔。
 ```bash
 uv run skills/sync_gist.py
 ```
@@ -218,8 +222,8 @@ uv run skills/sync_gist.py
 > 1. **GitHub Token**：前往 GitHub [Personal Access Tokens (classic)](https://github.com/settings/tokens) 頁面，點擊 `Generate new token (classic)`，填寫名稱並**務必勾選 `gist` 權限**，生成後將其填入 `.env`。
 > 2. **Gist ID**：前往 [GitHub Gist](https://gist.github.com/)，隨意建立一個新的 Gist。建立完成後，網址列中 `https://gist.github.com/您的帳號/` 後方的一長串英數代碼即為 `GIST_ID`。
 
-**Step 6: アーカイブ同期 (Sync to Archive)**
-若在 `./archive` 目錄下存在您的 Git 存檔專案，此腳本會自動將最新的 `docs/**/*.md` 拷貝至專案內，並自動執行 `git add` 與 `git commit`。
+**Step 7: アーカイブ同期 (Sync to Archive)**
+若在 `./archive` 目錄下存在您的 Git 存檔專案（任意名稱的目錄），此腳本會自動將最新的 `docs/**/*.md` 拷貝至專案內，並自動執行 `git add` 與 `git commit`。
 ⚠️ **安全性提示**：為避免在 Docker 容器內掛載 SSH 私鑰帶來潛在的資安風險，本腳本**不會**自動執行 `git push`。請於腳本執行完畢後，手動在主機端推送至 GitHub。
 ```bash
 uv run skills/sync_archive.py
@@ -250,7 +254,8 @@ cui-member-skill/
 │       ├── organize.prompt.md
 │       ├── transcribe.prompt.md
 │       ├── summarize.prompt.md
-│       └── summarize.md       # 給 LLM 的分析提示詞範本
+│       ├── summarize.md       # 給 LLM 的分析提示詞範本
+│       └── compare.prompt.md  # 觀點對比分析的 Agent 提示詞
 ├── docs/                      # 輸出目錄（按影片類型/日期分類存放）
 └── ./
     └── cookies.txt            # Cookies 檔案（已在 Git 中忽略）

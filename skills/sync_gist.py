@@ -49,35 +49,41 @@ def main():
             files_payload["keywords.md"] = {"content": content}
         print("已載入 docs/keywords.md -> keywords.md")
 
-    # 3. 讀取摘要筆記 (docs/*/*/*.md)
-    # 預期結構: docs/<VideoType>/YYYYMMDD/*.md
-    search_pattern = os.path.join("docs", "*", "*", "*.md")
-    summary_files = glob.glob(search_pattern)
+    # 3. 讀取摘要筆記 (docs/**/*.md)
+    search_pattern = os.path.join("docs", "**", "*.md")
+    summary_files = glob.glob(search_pattern, recursive=True)
     
+    # 忽略 GIST_README.md 和 keywords.md
+    summary_files = [f for f in summary_files if os.path.basename(f) not in ["GIST_README.md", "keywords.md"]]
+
     if not summary_files:
         print("未找到任何摘要筆記 (*.md) 可供同步。")
     
-    # 按照 video_type 進行分組，並找出最新的日期
-    latest_files = {} # video_type -> (date_dir, [filepaths])
+    # 按照分類進行分組，並找出最新的日期
+    # 目錄結構應類似 docs/<CategoryPath>/<Date>/<filename>.md
+    latest_files = {} # category_name -> (date_dir, [filepaths])
     for filepath in summary_files:
-        path_parts = filepath.split(os.sep)
-        # 例如: ["docs", "會員直播", "20260717", "summary.md"]
-        if len(path_parts) >= 4:
-            video_type = path_parts[-3]
+        rel_path = os.path.relpath(filepath, "docs")
+        path_parts = rel_path.split(os.sep)
+        
+        # 至少要包含 <分類>/<Date>/<filename>.md
+        if len(path_parts) >= 3:
             date_dir = path_parts[-2]
+            category_parts = path_parts[:-2]
+            category_name = "_".join(category_parts)
             
-            if video_type not in latest_files:
-                latest_files[video_type] = (date_dir, [filepath])
+            if category_name not in latest_files:
+                latest_files[category_name] = (date_dir, [filepath])
             else:
-                current_latest_date = latest_files[video_type][0]
+                current_latest_date = latest_files[category_name][0]
                 if date_dir > current_latest_date:
-                    latest_files[video_type] = (date_dir, [filepath])
+                    latest_files[category_name] = (date_dir, [filepath])
                 elif date_dir == current_latest_date:
-                    latest_files[video_type][1].append(filepath)
+                    latest_files[category_name][1].append(filepath)
             
-    for video_type, (date_dir, filepaths) in latest_files.items():
-        # Gist 上的檔名改為 VideoType.md，只保留最新的
-        gist_filename = f"{video_type}.md"
+    for category_name, (date_dir, filepaths) in latest_files.items():
+        # Gist 上的檔名改為 CategoryName.md，只保留最新的
+        gist_filename = f"{category_name}.md"
         combined_content = f"> **最後更新**: {date_dir}\n\n"
         
         for filepath in sorted(filepaths):
