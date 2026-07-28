@@ -3,7 +3,7 @@
 歡迎！身為一個 AI Agent（如 Claude、GitHub Copilot、Codex 或 Antigravity），當使用者要求你處理 YouTube 影片分析任務時，請遵循本指南中的工作流（Workflow）與工具（Skills）來完成任務。
 
 ## 專案概述
-本專案提供了一套自動化腳本，用於將「小翠時政財經」與「美投侃新闻」的 YouTube 影片音訊下載、轉譯為文字稿，並交由 AI Agent（也就是你）進行各自的總結與投資分析，最後輸出觀點對比的「新聞綜述」。
+本專案提供了一套自動化腳本，用於將「小翠時政財經」與「美投侃新闻」的 YouTube 影片音訊下載、轉譯為文字稿，並交由 AI Agent（也就是你）進行各自的總結與投資分析，最後輸出觀點對比的「每日新聞綜述」。
 所有操作應避免污染系統環境，並依賴 `uv run` 來隔離執行 Python 腳本。
 
 ## 你的核心任務與工作流程 (Workflow)
@@ -21,7 +21,7 @@
 > | `/organize` | Step 2: 分類整理 | `.mp3` 檔案路徑 |
 > | `/transcribe` | Step 3: 語音轉文字 | `.mp3` 檔案路徑 |
 > | `/summarize` | Step 4: 摘要分析 | `.txt` 檔案路徑 |
-> | `/compare` | Step 5: 觀點對比 (新聞綜述) | （無） |
+> | `/compare` | Step 5: 觀點對比 (每日新聞綜述) | （無） |
 > | `/sync` | Step 6: 同步至 Gist | （無） |
 > | `/archive` | Step 7: アーカイブ同期 | （無） |
 
@@ -51,11 +51,11 @@
 > **參閱文件**：`skills/prompts/summarize.prompt.md` 以及 `skills/prompts/summarize.md`
 
 ### Step 5: 觀點對比分析 (Comparative Analysis) — `/compare`
-讀取各頻道最新產生的摘要，進行觀點對比與異同分析，將結果輸出至 `docs/新聞綜述/` 目錄。
+讀取各頻道最新產生的摘要，進行觀點對比與異同分析，將結果輸出至 `docs/每日新聞綜述/` 目錄。
 > **參閱文件**：`skills/prompts/compare.prompt.md`
 
 ### Step 6: 同步至 Gist (Sync to Gist) — `/sync`
-將生成的重點筆記與新聞綜述自動同步至 GitHub Gist。
+將生成的重點筆記與每日新聞綜述自動同步至 GitHub Gist。
 根據作業系統執行對應指令：
 - **Mac**: `uv run skills/sync_gist.py`
 - **Windows**: `docker exec cui-tools uv run skills/sync_gist.py`

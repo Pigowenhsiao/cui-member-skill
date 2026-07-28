@@ -23,7 +23,7 @@
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
 | `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
-| `/compare` | Step 5: 讀取各頻道最新摘要，產生觀點對比與異同分析 (`新聞綜述`) | （無） |
+| `/compare` | Step 5: 讀取各頻道最新摘要，產生觀點對比與異同分析 (`每日新聞綜述`) | （無） |
 | `/sync` | Step 6: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
 | `/archive` | Step 7: 掃描 `./archive` 配下的 Git 專案並同步文件（安全起見需手動 Push） | （無） |
 
@@ -247,11 +247,11 @@ uv run skills/transcribe.py "./docs/小翠時政財經/會員直播/20260717/aud
 **Step 4: 摘要與分析**
 依照 `skills/prompts/summarize.md` 的提示詞，讓 AI Agent 讀取 `.txt` 並生成 `summary.md` 報告。
 
-**Step 5: 觀點對比分析 (新聞綜述)**
+**Step 5: 觀點對比分析 (每日新聞綜述)**
 根據 `skills/prompts/compare.prompt.md` 的指示，讓 AI Agent 比較最新的「小翠時政財經」與「美投侃新闻」摘要，產生對比分析報告。
 
 **Step 6: 同步至 Gist (選擇性)**
-將各分類的最新分析報告與新聞綜述上傳至 Gist，自動覆蓋並清理舊檔以維持頁面整潔。
+將各分類的最新分析報告與每日新聞綜述上傳至 Gist，自動覆蓋並清理舊檔以維持頁面整潔。
 ```bash
 uv run skills/sync_gist.py
 ```

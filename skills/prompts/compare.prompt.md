@@ -1,6 +1,6 @@
 ---
 mode: 'agent'
-description: 'Step 5: 閱讀最新摘要，產生觀點對比的新聞綜述'
+description: 'Step 5: 閱讀最新摘要，產生觀點對比的每日新聞綜述'
 ---
 
 ## 任務：觀點對比分析 (Comparative Analysis)
