@@ -1,0 +1,11 @@
+{
+  "source": "minerva_whisper/xJHAWatdT9E.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "pattern": "\\bAI\\b",
+      "replaced_with": "AI（人工智慧）",
+      "type": "terminology"
+    }
+  ]
+}

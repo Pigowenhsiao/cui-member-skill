@@ -1,0 +1,11 @@
+{
+  "source": "minerva_whisper/QOw-w7yJy-E_subs.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "error": "晶片",
+      "corrected": "芯片",
+      "type": "whisper_error"
+    }
+  ]
+}
