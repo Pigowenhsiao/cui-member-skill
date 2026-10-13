@@ -1,0 +1,20 @@
+{
+  "source": "docs/會員直播/20260925/audio.txt",
+  "corrections": [
+    {
+      "from": "低统金",
+      "to": "第一桶金",
+      "count": 6
+    },
+    {
+      "from": "分口",
+      "to": "波段",
+      "count": 11
+    },
+    {
+      "from": "卡尼",
+      "to": "馬克·卡尼",
+      "count": 1
+    }
+  ]
+}

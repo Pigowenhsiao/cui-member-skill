@@ -1,0 +1,11 @@
+{
+  "source": "docs/會員直播/20260821/audio.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "pattern": "\\bAI\\b",
+      "replaced_with": "AI（人工智慧）",
+      "type": "terminology"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "source": "docs/會員直播/20260926/audio.txt",
+  "corrections": [
+    {
+      "from": "挖地",
+      "to": "外地",
+      "count": 59
+    },
+    {
+      "from": "AI",
+      "to": "AI（人工智慧）",
+      "count": 1
+    }
+  ]
+}

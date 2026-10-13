@@ -1,0 +1,11 @@
+{
+  "source": "docs/每日要聞/20260729/audio.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "error": "沃什",
+      "corrected": "華許（Kevin Warsh）",
+      "type": "whisper_error"
+    }
+  ]
+}

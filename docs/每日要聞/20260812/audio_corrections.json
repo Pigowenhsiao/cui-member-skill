@@ -1,0 +1,21 @@
+{
+  "source": "docs/每日要聞/20260812/audio.txt",
+  "total_corrections": 3,
+  "corrections": [
+    {
+      "error": "貝森",
+      "corrected": "貝森特",
+      "type": "whisper_error"
+    },
+    {
+      "pattern": "貝森特(?![（　])",
+      "replaced_with": "貝森特（Bessent，財政部長）",
+      "type": "terminology"
+    },
+    {
+      "pattern": "\\bCPO\\b",
+      "replaced_with": "CPO（共同封裝光學）",
+      "type": "terminology"
+    }
+  ]
+}

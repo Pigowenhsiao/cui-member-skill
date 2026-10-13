@@ -1,0 +1,398 @@
+# 📘 常用關鍵詞彙表 (Keyword Glossary)
+
+> 本表整理自歷次直播與每日要聞之文字轉譯稿，旨在輔助 AI Agent 於摘要分析階段進行**語音辨識糾錯**。
+> Whisper 等語音轉文字工具在辨識中文財經術語、人名、公司名稱時，經常產生同音異義詞或錯別字。
+> 使用時請以本表為優先參照，根據上下文選取正確用詞。
+
+---
+
+## 一、美股個股與代碼 (US Stocks & Tickers)
+
+| 正確名稱 (繁體中文) | English | 代碼 (Ticker) | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- | :--- | :--- |
+| 英偉達 / 輝達 | NVIDIA | NVDA | 因為打、因偉達、英維達、印爾達 | GPU 與 AI 晶片龍頭，物理 AI 時代核心受益者 |
+| 黃仁勳（老黃）| Jensen Huang | — | 黃澤勳、黃潤勳、黃人勛 | NVIDIA 創辦人暨 CEO；語音易被誤識為「黃澤勳」|
+| 台積電 | TSMC | TSM / 2330.TW | 台機電、太極電 | 全球最大晶圓代工廠，先進製程壟斷者 |
+| 美光科技 | Micron Technology | MU | 美觀、美館、每光、鎂光 | 美國本土 DRAM/NAND 存儲巨頭，HBM 供應商 |
+| SK 海力士 | SK Hynix | SKHY (韓股 / ADR) | 海利斯、海利士、SK嗨力士 | 韓國存儲晶片巨頭，HBM 主要供應商 |
+| 三星電子 | Samsung Electronics | 005930.KS | 三星電字 | 韓國半導體與消費電子巨頭 |
+| 英特爾 | Intel | INTC、因特爾、應特爾、印爾達 | 美國老牌晶片廠，18A 製程轉型中；易與「輝達（NVIDIA）」混淆 |
+| 超微半導體 | AMD | AMD | — | GPU 與 CPU 設計公司，英偉達主要競爭者 |
+| 美滿電子 | Marvell Technology | MRVL | 賣為、賣味、麥威爾、賣未來 | 定制晶片 (Custom Silicon) 設計公司，進攻型成長股 |
+| 康寧 | Corning | GLW | 康凝、康檸 | 光通訊與特殊玻璃巨頭，穩健防禦型標的 |
+| 博通 | Broadcom | AVGO | 播通、泊通 | 半導體與基礎設施軟體公司 |
+| 甲骨文 | Oracle | ORCL | 加骨文、假骨文、克里姆林宫 | 企業軟體與雲端基礎設施巨頭 |
+| Seagate（硬盤）| Seagate Technology | STX | 细节人家 | 全球最大硬碟機公司；Q4 營收 36 億美元（+48%），毛利率 52.7% 創歷史新高；雲端資料中心產能已鎖定至 2028 年 |
+| 特斯拉 | Tesla | TSLA | — | 電動車與機器人公司，「市夢率」代表 |
+| 蘋果 | Apple | AAPL | — | 消費電子與服務巨頭，防禦型科技股 |
+| 谷歌 / Alphabet | Google / Alphabet | GOOGL | 古歌、骨哥 | 搜尋引擎、雲端與 AI 大模型 (Gemini) |
+| 微軟 | Microsoft | MSFT | 為軟、威軟 | 雲端 (Azure)、辦公軟體與 AI 投資巨頭 |
+| 亞馬遜 | Amazon | AMZN、亚谷 | 電商與雲端 (AWS) 巨頭；易與「亞股」混淆（訊 vs 股）|
+| Meta | Meta Platforms | META | 沒他、每他 | 社交媒體與 VR/AR 公司（前 Facebook） |
+| 帕蘭泰爾 | Palantir | PLTR | PLT、配螺太、怕蘭太爾 | 大數據分析與政府合約 AI 公司 |
+| 小火箭 | Rocket Lab | RKLB | — | 小型運載火箭公司，SpaceX 的平替 |
+| 大火箭 | SpaceX | SPCX | — | 馬斯克旗下太空運輸公司 |
+| 閃迪 | SanDisk / Western Digital | WDC | 山地、散地 | NAND 快閃記憶體公司（妖股特性） |
+| 鎧俠 | Kioxia | — | 凱俠、開下 | 日本 NAND 快閃記憶體公司 (原東芝存儲) |
+| 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新 | 中國國產 DRAM 記憶體龍頭 |
+| 阿斯麥 | ASML | ASML | 啊死麥、阿司麥 | 荷蘭光刻機壟斷企業 |
+| CrowdStrike | CrowdStrike | CRWD | Crystrike、COWE | 美股網絡安全巨頭 |
+| CoreWeave | CoreWeave | CRWV | Cowive、Cowe | AI 算力雲服務公司 |
+| Cloudflare | Cloudflare | NET | — | 網路安全與 CDN 服務商 |
+| 波克夏·海瑟威 | Berkshire Hathaway | BRK.B | 博客小哈薩維、波克下、伯克希爾 | 巴菲特旗下控股公司 |
+
+---
+
+## 二、AI 大模型與科技公司 (AI Models & Tech Companies)
+
+| 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- | :--- |
+| OpenAI | OpenAI | OBNI、歐本亞、我本亞、OpenEye、Outman | ChatGPT 開發商，預計 2027 年上市；語速快時易誤識為「OpenEye」，Sam Altman 易誤識為「Outman」|
+| Anthropic (Claude) | Anthropic | Astropic、Asropic、艾斯洛比克、歐巴尼亞 | Claude 系列大模型開發商，預計 2026 年 10 月上市；語音易被誤識為「歐巴尼亞」|
+| Claude Fable 5 | Claude Fable 5 | Fable 5、Fibre 5、FibrePile | Anthropic 的旗艦 AI 模型 |
+| GPT-5 | GPT-5 | GPDR、CHPT、GPD5 | OpenAI 的大型語言模型 |
+| Gemini | Gemini | 節目奶、潔美尼 | Google 的 AI 大模型系列 |
+| DeepSeek | DeepSeek | deep sick、deep seek、滴普西科、梁文峰、梁文芬 | 中國 AI 公司，開源大模型；2026/7 投資交流會發言外傳，暴露持有 2 萬張 H200 及走私 NVIDIA 晶片渠道，二次融資緊急喊停 |
+| Kimi (月之暗面) | Kimi / Moonshot AI | 越致暗面 | 中國 AI 公司，K3 大模型（2.81 兆參數）；語音易與「越致暗面」混淆 |
+| xAI | xAI | — | 馬斯克旗下 AI 公司 |
+| Hugging Face | Hugging Face | — | AI 開源平台；SWARP 新模型曾成功滲透（安全測試） |
+| SWARP (Stargate) | SWARP / Stargate | SROP、SWP、SROP | OpenAI 與軟銀合資的 AI 數據中心項目（俄亥俄州兆瓦級園區）；縮寫變體多，易被誤識 |
+| Sam Altman | Sam Altman | Outman | OpenAI CEO；口音易誤識為「Outman」|
+| Fab 5.1 | Fab 5.1 | — | SWARP 最新旗艦模型（受白宮審查約束） |
+| Cloud Ops 5 | Cloud Ops 5 | — | SWARP 減半定價的 AI 推理服務 |
+| CPO（光交換器）| Co-Packaged Optics | 共封裝光學、先進光學分裝、共分装光学、先进光学分装 | NVIDIA 已小批量出貨，通過 Meta 等廠商驗證，2027-2028 大規模放量；語速快時易吞字 |
+| 矽光子學 / 矽光子 | Silicon Photonics | 归光子 | 資料中心光互聯關鍵技術；美國政府 8.74 億補貼重點方向；易與「歸光子」混淆 |
+
+---
+
+## 三、財經術語與指數 (Financial Terms & Indices)
+
+| 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- | :--- |
+| 費半 / 費城半導體指數 | PHLX Semiconductor Index | 肺斑、肺班、飛半 | 代碼 SOX，美股半導體板塊基準指數 |
+| 殺估值 | Multiple Compression / De-rating | 沙姑值、沙估值、殺姑值、沙古值 | 股票因市場情緒或預期轉變導致本益比下修 |
+| 殺槓桿 / 去槓桿 | Deleveraging | 沙槓桿、殺鋼桿 | 市場強制清除過高槓桿倉位的過程 |
+| 本益比 (PE) | Price-to-Earnings Ratio | 批、批率 | 股價除以每股盈餘，衡量估值高低 |
+| 前瞻本益比 | Forward PE | 前瞻批、前瞻適應率 | 基於未來預估 EPS 計算的本益比 |
+| 每股盈餘 (EPS) | Earnings Per Share | — | 公司淨利除以流通股數 |
+| PEG 比率 | PEG Ratio | — | PE 除以 EPS 增長率，衡量成長性估值 |
+| 市夢率 | 「Price-to-Dream Ratio」 | 是夢率、施夢率 | 講者根據“市盈率”自創的詞，指特斯拉等公司基於未來願景的極端估值 |
+| 強制平倉 / 強平 | Forced Liquidation | 強評、強坪 | 保證金不足時券商強制賣出持倉 |
+| 鏈上合約 | On-chain Contract | 炼上血案 | 加密貨幣或區塊鏈上的永續合約；SK 海力士 NXT 交易所事件中 960 帳戶被鏈上閃崩掃出 |
+| 長約單 / 長約協議 | Long-term Agreement | 场景单、場景單 | 與客戶簽訂的長期供貨合約；易與「場景」混淆（長 vs 場）|
+| 均價（平均成本）| Average Cost | 军价 | 分批建倉時拉低平均成本的價格；易與「軍價」混淆（均 vs 軍）|
+| 槓桿 ETF | Leveraged ETF | 钢杆ETF、丹一钢杆ETF | 韓國散戶爆炒的高槓桿金融商品；「槓桿」易誤識為「鋼桿」|
+| 融資餘額 | Margin Balance | 溶資餘額 | 投資者向券商借款炒股的總額 |
+| 爆倉 | Margin Call / Blow-up | 報倉、暴倉 | 槓桿帳戶虧損超過保證金被強制清算 |
+| 預託金 | Investor Deposits | 鬱鬱金 | 韓國散戶存於券商帳戶的可用現金 |
+| 抄底 | Bottom Fishing / Buy the Dip | 超底、炒底 | 在股價低位買入 |
+| 追高 | Chase the Rally | — | 在股價高位追漲買入 |
+| 看漲期權 | Call Option | 看长期权 | 押注股價上漲的衍生性商品；易與「看長期權」混淆（漲 vs 長）|
+| 恐慌指數 (VIX) | CBOE Volatility Index | — | 衡量市場恐慌程度的指數 |
+| 資本支出 | Capital Expenditure (CapEx) | 資本開支、資本支初 | 公司用於購買固定資產的支出 |
+| 自由現金流 | Free Cash Flow (FCF) | — | 經營現金流減去資本支出 |
+| RPO | Remaining Performance Obligations | RPU | 剩餘履約義務，衡量未確認收入的合約金額 |
+| 美聯儲 | Federal Reserve (Fed) | 美聯初、沒聯儲、握實 | 美國聯邦準備系統（央行）；「沃什」易誤識為「握實」|
+| 降息 | Rate Cut | — | 央行下調基準利率 |
+| 加息 | Rate Hike | — | 央行上調基準利率 |
+| TGA 帳戶 | Treasury General Account | GTA帳戶、GDA帳戶 | 美國財政部一般帳戶，影響市場流動性 |
+| MSCI 發達市場指數 | MSCI Developed Markets Index | MSSI | 全球最大指數之一，被動資金追蹤 |
+| 擠出效應 | Crowding-out Effect | 幾出效應 | 某項支出增加導致其他支出被迫減少 |
+| 存量博弈 | Zero-sum Game | — | 市場總量不變，一方獲利另一方必然虧損 |
+| 增量思維 | Incremental / Growth Mindset | — | 市場蛋糕會做大，大家可以齊頭並進 |
+| 高股息 ETF | High Dividend ETF | 高股新ETF | 投資高股息率股票的 ETF |
+| 先進封裝 (CoWoS) | Advanced Packaging (CoWoS) | 先進分裝 | 台積電的先進封裝技術，嚴重供不應求 |
+| HBM (高頻寬記憶體) | High Bandwidth Memory | — | AI 訓練所需的高效能記憶體 |
+| 數據中心 | Data Center | 数以中心 | AI 訓練與推理的基礎設施；易與「數以中心」混淆（據 vs 以）|
+| 風險投資（VC）| Venture Capital | 分顯投資基金、分线投资、分显投资基金 | 補助新創技術企業；語速快時易誤識為「分顯」，應為「風顯」|
+| 藍領 | Blue Collar | 学历开始变质、学历变质、持乡 | AI 時代重新吃香的技術工人群體；上下文易被誤解為「學歷」|
+| DRAM | Dynamic Random-Access Memory | — | 動態隨機存取記憶體，具週期性 |
+| 做空 | Short Selling | 坐空 | 借入股票賣出，期望低價買回獲利 |
+
+---
+
+## 四、人物與政治 (People & Politics)
+
+| 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- | :--- |
+| 黃仁勳 (老黃) | Jensen Huang | 黃潤勳、黃人勛 | NVIDIA 創辦人暨 CEO |
+| 山姆·奧特曼 | Sam Altman | 奧特慢、奧特蠻 | OpenAI CEO |
+| 馬克·扎克伯格 | Mark Zuckerberg | 加克伯格、扎克伯哥 | Meta CEO |
+| 蘇姿丰 | Lisa Su | 蘇媽 | AMD CEO |
+| 拉里·埃里森 | Larry Ellison | 拉里、老闆Larry | Oracle 創辦人 |
+| 巴菲特 | Warren Buffett | 拔菲特、巴非特 | 波克夏·海瑟威董事長，價值投資大師 |
+| 宇樹（Unitree）| Unitree Robotics | 语术 | 中國人形機器人公司，電動車轉型目標之一；易與「語術」混淆（宇 vs 語）|
+| 佩洛西 | Nancy Pelosi | 配螺旭、配大媽 | 美國眾議院前議長，以股票交易聞名 |
+| 川普 | Donald Trump | 川撲、穿普 | 美國現任總統 |
+| 魏哲家 | C.C. Wei | 魏佼佼 | 台積電 CEO |
+| 李在明 | Lee Jae-myung | 李在民 | 韓國現任總統 |
+| 陳立武 | Lip-Bu Tan (Intel CEO) | 陳麗五、陳立五 | 英特爾 CEO，2025 年接任，強調 IDM 2.0 重啟 |
+| 高市早苗 | Takaichi Sanae | — | 日本現任首相 |
+| 鮑威爾 | Jerome Powell | 報位、泡沫 | 前美聯儲主席 |
+| 沃什 (凱文·沃什) | Kevin Warsh | 沃師、臥時、臥室、我是 | 現任美聯儲主席 |
+
+---
+
+## 五、頻道特有用語 (Channel-specific Terms)
+
+| 正確用詞 (繁體中文) | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- |
+| 小翠時政財經 | 小智慧時政財經、小翠詩人財經 | YouTube 頻道名稱 |
+| 進攻股 | 進工股 | 波動大、成長性高、需主動搶訂單的股票（如 Marvell） |
+| 防禦股 / 穩健股 | 放浴股 | 波動小、訂單可見、基本面穩健的股票（如 Corning） |
+| 養老股 | — | 適合長期持有、吃分紅的優質龍頭股（如 NVIDIA） |
+| 彩票股 | — | 倉位小、風險高但有潛力的投機標的（如 Rocket Lab） |
+| 妖股 | 腰骨 | 波動極端、難以用基本面分析的股票（如閃迪） |
+| 老燈股 | — | 傳統產業的老牌上市公司（如銀行股、Costco） |
+| 鬼故事 | — | 市場上用來嚇人的利空傳言或敘事 |
+| 絞肉機（行情） | — | 強平踩踏導致的連鎖下跌，多空雙殺 |
+| 左側選手 | — | 在股價尚未見底時就開始分批布局的投資者 |
+| 三喵（軍團） | — | 英格蘭足球隊「三獅軍團」的球迷愛稱 |
+| 遞刀子 | — | DeepSeek 發言外傳等同向美國監管機構提供證據的比喻 |
+| 白手套 | — | 大公司為關聯方提供擔保、訂單或資源支援（如 NVIDIA 之於 OpenAI） |
+| 半個國家隊 | — | 獲得美國政府資源支持但非正式入股（如 OpenAI 取得白宮數據中心園區） |
+
+---
+
+## 六、宏觀與地緣政治 (Macro & Geopolitics)
+
+| 正確名稱 (繁體中文) | English | 常見誤識別 | 簡要說明 |
+| :--- | :--- | :--- | :--- |
+| 中期選舉 | Midterm Elections | 中西選舉、中西元旗 | 美國國會議員的期中改選 |
+| 瓊斯法案 | Jones Act | — | 規定美國港口間貨運須用美國船隻的法案 |
+| 廣場協議 | Plaza Accord | — | 1985 年迫使日圓升值的多國協議 |
+| 荷台海峽 / 曼德海峽 | Bab el-Mandeb | 货木材下、荷台海俠 | 葉門與厄利垂亞間的海峽，紅海連接地中海要道，胡塞武裝封鎖目標 |
+| 油輪 | Oil Tanker | 游船、郵船 | 中東石油運輸船隻，常被誤識為觀光遊艇 |
+| 霍爾木茲海峽 | Strait of Hormuz | 霍木茲海峽、霍木杂侠 | 全球石油運輸咽喉要道；語速快時易吞字成「霍木雜俠」|
+| 深層政府 | Deep State | — | 指美國政府內部不受選舉影響的官僚勢力 |
+| GPIF | Government Pension Investment Fund | — | 日本政府養老金投資基金，全球最大 |
+| 基點（bps）| Basis Points | 纪点 | 利率測量單位，1% = 100bps；易與「紀點」混淆（基 vs 紀）|
+| 盡調 / Due Diligence | Due Diligence | 进调 | 投資前對標的進行盡職調查；易與「進調」混淆（盡 vs 進）|
+
+---
+
+| Semi-analysis | Semi-analysis | 因為打 | 知名半導體研究機構，透過一線調研得出結論，比華爾街分析師更準確 |
+| Cerebras | Cerebras | Cereus、塞瑞布拉斯 | AI 推理晶片公司，新股上市暴跌 |
+| Polymarket | Polymarket | 怕里市場 | 預測市場平台，Arena 的對標對象 |
+| Ackman（比爾·阿克曼）| Bill Ackman | 埃克曼、阿克慢 | 潘興廣場資本創辦人，知名主動投資者 |
+
+---
+
+| 長鑫存儲 | CXMT | 長新、長星、常新 | 中國國產DRAM龍頭，A股IPO（2026/7/27）暴漲465%至3.2兆元市值，市佔率8-10%（遠低於美光20%/SK海力士30%+），PE達30倍，明顯泡沫 |
+
+
+| SSI (Safe Superintelligence) | SSI | — | 前 OpenAI 首席科學家 Ilya Sutskever 創辦的前沿 AI 實驗室，2026 年英偉達重倉 $50 億美元；英偉達看上其尚未公開的下一代 AI 技術 |
+
+> **最後更新日期**：2026-07-31
+> **資料來源**：會員直播 20260710、20260717；每日要聞 20260714-20260725、20260624-20260630、20260727、20260728、20260729、20260730、**20260731**
+
+---
+
+## 七、本集新增（20260729 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 革新 | GlobalFoundries | 美國半導體代工廠，本次獲美國政府 8.74 億資助最多（3 億美元）|
+| 归光子 | 矽光子學（Silicon Photonics）| 先進封裝技術，美國政府資助重點方向 |
+| 数以中心 | 資料中心（Data Center）| AI 基礎設施核心 |
+| 陆维会 | 陸委會 | 台灣官方機構 |
+| 出东 | 出動 | 軍事行動動詞 |
+| 满 | 賣 | 方言口音干擾 |
+| 革新GFS | GlobalFoundries | 應為 GlobalFoundries（革新半導體），GFS 為打字錯誤 |
+
+> **新增日期**：2026-07-29
+
+---
+
+## 八、本集新增（20260730 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 印詞 | Instagram（Meta 旗下）| 社交媒體平台 |
+| 设像头 | 監視器/攝像頭 | 安防設備 |
+| 成型存储 | 長鑫存儲（CXMT）| 中國 DRAM 廠商，被列美國制裁名單 |
+| 革新GFS | GlobalFoundries | 美國半導體代工廠 |
+| SROPHIC/SROPIC | SWARP（軟銀/OpenAI 合資）| 多次被誤識別，需注意上下文 |
+| 分显 | 分眾/公共 | 投資基金/風險投資 |
+| 社军企业 | 軍事企業 | 制裁相關術語 |
+| 达米埃塔 | 達米埃塔（Damietta）| 埃及港口 |
+
+> **新增日期**：2026-07-30
+
+---
+
+## 九、本集新增（20260731 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 欧门 | 歐盟（European Union）| 歐盟啟動AI超級工廠招標，100億歐元補貼 |
+| 欧足联 | 歐洲足聯（UEFA）| FIFA世界盃商業化爭議主角，旗下55個協會強烈反對 |
+| 休达 | 休達（Ceuta）| 西班牙位於北非的飛地，6萬非法移民涌入歐盟 |
+| 美加收益率 | 美債殖利率（US Treasury Yield）| 10年期國債收益率，本集約4.696% |
+| CityDole | Citadel（城堡投資）| 全球最大對沖基金之一，接盤少年股神倉位 |
+| 凯霞 | SK海力士（SK Hynix）| 韓國記憶體巨頭，7/31漲停30% |
+| GLW/Minework | 康寧（Corning）/ 美光（Micron）| 對照Semi-analysis半導體調研，長線可持有 |
+| D-RAM | DRAM（動態隨機存取記憶體）| 存儲晶片品類 |
+| 语术 | 宇樹（Unitree）| 中國人形機器人公司，即將IPO但被列美國制裁 |
+| 长兴 | 長鑫存儲（CXMT）| 已被炒至4兆元市值，泡沫警告 |
+| SWARPIG | SWARP（軟銀/OpenAI合資AI園區）| 德州1.6GW園區，谷歌擔保150億美元 |
+| 欧伯远 | OpenAI | GPT-5/6降價80%，企業市場大動作 |
+
+## 十、本集新增（20260805 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 零化银 | 磷化銦（InP）| 光學收發器核心材料，用於高速通訊 |
+| Cohillian / Cowillian | Coherent（光學通訊公司）| 美國光學通訊龍頭，Lumine 被收購 |
+| Lumiton | Lumine Networks | 被 Coherent 收購的美國光學通訊公司 |
+| 长薪存储 | 長鑫存儲（CXMT）| 中國 DRAM 廠商，再次出現 |
+| 迈维尔 | 美滿電子（Marvell）| 已列，但語音中出現「迈维尔」變體 |
+| 归光子 | 矽光子學 | 已列 |
+| 数以中心 | 資料中心 | 已列 |
+| SWAPX4 | SWARP 4倍 | SpaceX 出租給 SWARP 的算力為輝達 4 倍價格 |
+| 天机 | 天璣（Tianji）| 美國太空軍項目名稱 |
+| 卖当劳 | 麥當勞 | 速食連鎖；K 型消費結構對照 |
+| 崔泰元 | 崔泰鉉（SK 海力士會長）| 韓文音譯差異 |
+
+> **新增日期**：2026-08-05
+
+---
+
+## 十一、本集新增（20260803 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 长薪 | 長鑫存儲（CXMT）| 已多次出現 |
+| 照义创新 | 兆易創新（GigaDevice）| A股存儲設計公司 |
+| 长兴 | 長鑫存儲（CXMT）| 語音簡化 |
+| 中威电子 | 中微半導體（AMEC）| 中國半導體設備商 |
+| 天山礼业 | 天山禮業 | 新疆食品公司（出現在制裁清單）|
+| 恰恰食品 | 恰恰食品 | 零食品牌，出現在制裁清單 |
+| 金冈线 | 金剛石（超硬材料）| 稀土管制對象 |
+
+> **新增日期**：2026-08-06
+
+---
+
+## 十二、本集新增（20260804 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 数以中心 | 資料中心 | 已列 |
+| 零化银 | 磷化銦（InP）| 光收發器核心材料 |
+| CIG | CIG Tech（武漢光纖）| 被列入美國實體清單的中國光模塊廠商 |
+| Lumentum | Lumentum（美商）| 美國光學元件廠，光模塊替代供應商 |
+| 卖位 | 美滿電子（Marvell）| 已列 |
+| 照义创新 | 兆易創新 | 已列 |
+| 长兴 | 長鑫存儲 | 已列 |
+
+> **新增日期**：2026-08-06
+
+## 十三、本集新增（20260807 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 霍木茲海峽 | 霍爾木茲海峽（Strait of Hormuz）| 伊朗禁令草案焦點，全球石油咽喉要道 |
+| 多晶礦 | 多晶礦（Polysilicon）| 光伏/半導體上游原材料，美國新關稅目標 |
+| 應用光電 | 應用光電（Applied Optoelectronics, AOI）| 美國光通訊設備製造商，800G/1.6T主力廠商 |
+| 飞農 | 非農（非農就業數據）| 美國勞動力市場關鍵指標 |
+| GPIF | GPIF（政府養老金投資基金）| 日本政府養老金，全球最大之一 |
+| TeraFab | TeraFab | SpaceX晶片超級工廠品牌名，首期168億美元落戶德州 |
+| 語述 | 宇樹（Unitree）| 中國人形機器人公司，IPO中（150.8元/股）|
+| 必中就輕 | 避重就輕 | 中國官方/企業回應外界批評時的典型策略 |
+| AOI | Applied Optoelectronics | 光通訊硬體個股代碼（美股）|
+| 非農就業 | 非農就業人數 | 非農業部門新增就業人口 |
+| 矽光子學 | 矽光子學（Silicon Photonics）| 先進封裝技術，美國政府資助重點 |
+
+## 十四、本集新增（20260807 會員直播）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| PLT | PLTR（Palantir）| 美股國防 AI 軟體個股代碼 |
+| 亞馬遜 | Amazon / 亞馬遜（AMZN）| 雲端巨頭之一 |
+| 谷歌 | 谷歌 / Google（GOOG）| 雲端巨頭之一 |
+| 甲骨 | 甲骨文（Oracle, ORCL）| 美股軟體資料庫龍頭 |
+| 白卡 | 白卡（Medicaid）| 美國低收入醫療補助制度 |
+| 食品卡 | 食品卡（SNAP / EBT）| 美國食物救濟補助 |
+| W2 | W-2（薪資稅表）| 美國雇主須填報的員工薪資與稅務表格 |
+| 就業意願 | 就業意願（Labor Force Participation）| 勞動力市場參與率關鍵指標 |
+| IGV | IGV（iShares U.S. Software ETF）| 軟體板塊 ETF |
+| SMH | SMH（VanEck Semiconductor ETF）| 半導體板塊 ETF |
+| S2P | S2P（SpaceX Starlink IPO）| SpaceX 星鏈 IPO 傳聞，預計 2026 年 10 月上市 |
+| 新比 | 性價比（性價比 / 回報率）| EPS 增速 vs 股價的相對價值衡量 |
+| 後喊話 | 後喊話（After the fact）| 先建倉後喊話，配合多空操作 |
+| RPO | RPO（Remaining Performance Obligations）| 剩餘履約承諾，雲端廠商未來將確認的營收 |
+| 左側選手 | 左側選手 | 在股價低估時提前分批買入的投資者類型 |
+| 右側選手 | 右側選手 | 等趨勢確認後才進場的投資者類型 |
+| 踏空 | 踏空（Missed Opportunity）| 股票大漲但自己沒買，眼睜睜看著機會流失 |
+
+> **新增日期**：2026-08-07
+
+---
+
+## 十五、本集新增（20260810 每日要聞）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| 伯克小 / 博克希爾 | 波克夏·海瑟威（Berkshire Hathaway, BRK.B）| 巴菲特旗下控股公司，Q2淨買入200億美元，終結3年淨賣出 |
+| Taylor Morrison | Taylor Morrison（房屋建築商）| BRK.B Q2買入68億美元，佈局房地產轉機 |
+| Lensim | Lensim（電力基礎設施開發商）| NVDA入股30億美元持股20%的私營電力開發商，鎖定4GW電力資源 |
+| Muse Glimmer | Muse Glimmer（Meta輕量模型）| Meta開源輕量模型，300億參數，單卡可運行 |
+| S2P | SpaceX Starlink IPO | 市場多次以「S2P」誤識別SpaceX Starlink IPO |
+| POT | PLTR（Palantir）| Palantir 多次被誤識別為「POT」 |
+| PLT | PLTR（Palantir）| 同上 |
+| 阿贝尔 / 阿貝爾 | 阿貝爾（Greg Abel）| 波克夏新掌門人，主導本季新進場方向 |
+| 谷歌 | 谷歌 / Alphabet（GOOGL）| BRK.B Q2買入約100億美元，已成前五大持倉 |
+| 以為太 | 以太坊（Ethereum）| 區塊鏈平台，本次未詳細討論 |
+| 丙二醇 / 必耕果 | 丙二醇（Propanediol）| 中國商務部反傾銷稅徵收對象（美國54.3%、墨西哥17.8-51.6%）|
+| 墨西哥 | 墨西哥（Mexico）| 反傾銷稅對象國之一 |
+| 墨西哥和美国 | 墨西哥和美國（Mexico & USA）| 貿易反制措施 |
+| Hassett | 哈賽特（Hassett）| 白宮經濟顧問，代表川普政府經濟立場 |
+| 贝森特 | 贝森特（Bssett）| 美國財政部副部長，調控美債殖利率 |
+| 卧石 | 鮑威爾（Powell）或沃什（Warsh）| 前美聯儲主席或現任主席，語境中指聯準會貨幣政策 |
+| 哈萨比斯 | 哈薩比斯（Demis Hassabis）| DeepMind創辦人兼董事長 |
+| 大摩 | 摩根士丹利（Morgan Stanley）| 分析「非對稱縮表」路徑 |
+| 光核存储 | 光纖存儲（光纖+存儲）| 兩條AI上游主賽道之一 |
+| 陸委會 | 陸委會 | 台灣官方兩岸事務機構 |
+| 必耕果 | 丙二醇（Propanediol）| 化學品反傾銷稅商品名 |
+| 达米埃塔 | 達米埃塔（Damietta）| 埃及港口 |
+| 歐门 | 歐盟（European Union）| 歐盟啟動AI超級工廠招標 |
+| 波兰 | 波蘭（Poland）| 本集未出現，需留意是否誤識別 |
+
+> **新增日期**：2026-08-10
+
+---
+
+> **新增日期**：2026-07-31
+
+---
+
+## 本集新增（20260812 每日要聞）
+
+| 正確名稱 | 常見誤識別 | 說明 |
+|---------|-----------|------|
+| 紅海 | 宏海 | Red Sea；曼德海峽連接亞丁灣 |
+| 荷莫茲海峽 | 霍木茲海峽 | Hormuz Strait |
+| 封鎖 | 分所 | 伊朗宣布封鎖海峽 |
+| 地對地導彈 | 地域火導彈 | 美軍發射的導彈 |
+| 去槓桿 | 克戊 | 韓國金融去槓桿化 |
+| 上游 | 商厂 | 半導體上游供應商 |
+| 刀口向內（改革） | 刀口向內 | 體制內部改革，削減既得利益 |
+| 國企大下崗 | 国鎭大下岗 | 90年代中國國有企業職工大批失業 |
+| 襯托 | 趁托 | 「美女是要襯托的」，電影台詞 |
+| 規模 | 規模 | — |
+
+---
+
+## 十六、本集新增（20261009 會員直播）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| POTR / POTM / POTN | PLTR（Palantir）| 本集主題股，多次被誤識別為不同變體 |
+| PLT | PLTR（Palantir）| Palantir 簡寫被誤識別 |
+| 假股问 | 甲骨文（Oracle）| 語音辨識錯誤 |
+| 挥打 | 未知（待確認）| 上下文：「胃口有点大 OK 挥打可以打对折吗」可能是「回購」或其他？ |
+| 每家收益 / 每家收益率 | 美債殖利率（US Treasury Yield）| 十年期美債殖利率 |
+| 倍皮 | 本益比 | 本益比中的「本」被吞字 |
+
+> **新增日期**：2026-10-09
