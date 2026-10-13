@@ -13,7 +13,12 @@ import argparse
 import platform
 import subprocess
 import tempfile
+from pathlib import Path
 from dotenv import load_dotenv
+
+# Add skills/ to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+from git_auto_push import auto_push
 
 # ---------------------------------------------------------------------------
 # 工具函式
@@ -300,6 +305,13 @@ def main():
             f.write(text)
 
         print(f"\n文字轉換成功！結果已儲存至: {output_txt}")
+
+        # 自動 commit + push 至 GitHub
+        video_id = Path(args.audio_file).stem
+        auto_push(
+            output_txt,
+            f"feat(transcribe): add transcript for video {video_id}",
+        )
         print("後續請由 AI Agent 將此文本檔案與音訊一併整理至對應分類目錄下。")
 
     except Exception as e:

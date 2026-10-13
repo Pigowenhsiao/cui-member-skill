@@ -19,7 +19,12 @@ import json
 import re
 import argparse
 from datetime import datetime
+from pathlib import Path
 from dotenv import load_dotenv
+
+# Add skills/ to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+from git_auto_push import auto_push
 
 load_dotenv()
 
@@ -273,6 +278,12 @@ def generate_summary(audio_path: str, info_path: str, category: str, out_dir: st
     out_path = os.path.join(out_dir, "summary.md")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(summary_text)
+
+    # 自動 commit + push 至 GitHub
+    auto_push(
+        out_path,
+        f"feat(summary): add summary for {category}/{video_id[:8]}",
+    )
 
     return out_path
 
