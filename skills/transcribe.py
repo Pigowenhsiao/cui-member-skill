@@ -118,23 +118,32 @@ def print_progress(current_sec: float, total_sec: float, prefix: str = "") -> No
 # 転写バックエンド
 # ---------------------------------------------------------------------------
 
+def _check_cuda_available() -> bool:
+    """檢測 CUDA/GPU 是否可用於 Whisper."""
+    try:
+        import torch
+        return torch.cuda.is_available()
+    except ImportError:
+        return False
+
+
 def transcribe_local(audio_path: str) -> str:
     is_mac_arm = platform.system() == "Darwin" and platform.machine() == "arm64"
     total_sec = get_audio_duration(audio_path)
+    cuda_available = _check_cuda_available()
 
     if is_mac_arm:
+        # ── Apple Silicon: 使用 mlx-whisper GPU 加速 ──────────────────────
         print(f"偵測到 Apple Silicon macOS，使用本地 mlx-whisper 進行 GPU 加速語音識別 (音訊: {audio_path})...")
         import mlx_whisper
         model = os.getenv("WHISPER_MODEL", "mlx-community/whisper-medium-mlx-8bit")
         print(f"載入模型: {model}")
 
-        # mlx_whisper は verbose=True のとき segment を stdout に流す。
-        # 進捗を自前で取るため verbose=False にし、segments を走査する。
         raw = mlx_whisper.transcribe(
             audio_path,
             path_or_hf_repo=model,
             language="zh",
-            verbose=False       # 自前で進捗表示するため False
+            verbose=False
         )
         segments = raw.get("segments", [])
         seg_dicts = []
@@ -146,16 +155,39 @@ def transcribe_local(audio_path: str) -> str:
             print(f"\n[{start:06.1f}s -> {end:06.1f}s] {text.strip()}", file=sys.stderr)
             seg_dicts.append({"text": text, "start": start, "end": end})
 
-        print(file=sys.stderr)  # 改行
+        print(file=sys.stderr)
+        return format_segments(seg_dicts)
+
+    elif cuda_available:
+        # ── CUDA GPU: 使用 openai-whisper + CUDA 加速 ─────────────────────
+        print(f"🚀 偵測到 NVIDIA GPU，使用 openai-whisper CUDA 加速轉譯 (音訊: {audio_path})...", file=sys.stderr)
+        import whisper
+        model_name = os.getenv("WHISPER_MODEL", "medium")
+        print(f"載入模型: {model_name} on CUDA", file=sys.stderr)
+
+        model = whisper.load_model(model_name, device="cuda")
+        result = model.transcribe(audio_path, language="zh", fp16=True)
+
+        seg_dicts = []
+        for seg in result.get("segments", []):
+            start = seg.get("start", 0.0)
+            end   = seg.get("end",   0.0)
+            text  = seg.get("text",  "")
+            print_progress(end, total_sec, prefix="轉譯進度 ")
+            print(f"\n[{start:06.1f}s -> {end:06.1f}s] {text.strip()}", file=sys.stderr)
+            seg_dicts.append({"text": text, "start": start, "end": end})
+
+        print(file=sys.stderr)
         return format_segments(seg_dicts)
 
     else:
-        print(f"非 Apple Silicon 環境，使用 CPU 版 faster-whisper (型號: medium) 進行語音識別 (音訊: {audio_path})...")
+        # ── CPU fallback: faster-whisper ─────────────────────────────────
+        print(f"⚠️ 無 GPU 支援，使用 CPU 版 faster-whisper (型號: medium) 進行語音識別 (音訊: {audio_path})...", file=sys.stderr)
         from faster_whisper import WhisperModel
 
         model = WhisperModel("medium", device="cpu", compute_type="int8")
         segments_gen, info = model.transcribe(audio_path, beam_size=5, language="zh")
-        print(f"偵測語言為 '{info.language}'，信心度 {info.language_probability:.2f}")
+        print(f"偵測語言為 '{info.language}'，信心度 {info.language_probability:.2f}", file=sys.stderr)
 
         seg_dicts = []
         for seg in segments_gen:
@@ -163,7 +195,7 @@ def transcribe_local(audio_path: str) -> str:
             print(f"\n[{seg.start:06.1f}s -> {seg.end:06.1f}s] {seg.text.strip()}", file=sys.stderr)
             seg_dicts.append({"text": seg.text, "start": seg.start, "end": seg.end})
 
-        print(file=sys.stderr)  # 改行
+        print(file=sys.stderr)
         return format_segments(seg_dicts)
 
 
