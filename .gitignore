@@ -150,20 +150,11 @@ temp/*
 *.wav
 *.m4a
 
-# Docs output (audio files are too large for git)
-docs/**/*.mp3
-docs/**/*.wav
-docs/**/*.m4a
-
 # Python
 __pycache__/
 *.pyc
 .venv/
 .env
-docs/**/*.json
-docs/**/*.txt
-docs/**/*.md
-!docs/GIST_README.md
 
 cookies.*.txt
 cookies.txt
