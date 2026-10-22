@@ -23,7 +23,7 @@ description: '一鍵完成全頻道掃描與任務排程：掃描、下載、分
 1. 如果在 **Step 1** 或 **Step 2** 中，**有任何一部新影片**被下載並產生了新摘要：
    - 執行 `/compare` (參考 `skills/prompts/compare.prompt.md`)，產生最新觀點對比的「每日新聞綜述」。
    - 執行 `/sync`，將結果同步至 Gist。
-   - 執行 `/archive`，將結果同步至本地歸檔。
+   - 執行 `/archive`，將結果同步至歸檔（Obsidian Vault）：`uv run skills/sync_vault.py`（`.env` 需設定 `VAULT_PATH`）。腳本會鏡像 `docs/` 至 Vault 的 `18-Wealth/docs/`、更新 `keywords.md` 與各分類 `index.md`、並在 Vault 建立 Git commit（不自動 push）。
 2. 如果 Step 1 與 Step 2 **都沒有**下載新影片，請向使用者回報「兩頻道皆無新影片，略過後續的對比與同步操作」，並結束此任務。
 
 ### 注意

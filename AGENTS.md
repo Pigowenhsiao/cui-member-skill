@@ -62,7 +62,16 @@
 > 執行前請確保 `.env` 中已設定 `GITHUB_TOKEN` 與 `GIST_ID`。
 
 ### Step 7: アーカイブ同期 (Sync to Archive) — `/archive`
-`./archive` 配下の任意の名前のアーカイブ用リポジトリが存在する場合、`docs` 内の `.md` ファイルをコピーし、Git コミットを行う。
+將 `docs/` 產出的摘要同步至歸檔目標。目前專案的歸檔目標為 **Obsidian Vault (`Pigo_Obsidian`)**。
+
+**Vault 同步（主要路徑）**：把 `docs/` 鏡像到 Vault 的 `18-Wealth/docs/`，並自動 commit。
+```bash
+uv run skills/sync_vault.py
+```
+> 執行前請確保 `.env` 中已設定 `VAULT_PATH`（Vault 根目錄，例如 `E:\obsidian`）與 `VAULT_DOCS_SUBDIR`（預設 `18-Wealth/docs`）。
+> 行為準則：**不覆寫** Vault 內既有筆記（保護人工校訂內容）、內容雜湊重複者不重複寫入、`index.md` 僅追加新日期列、`keywords.md` 保留 Vault 側的 `## Linked Notes` 節。腳本只 commit，**不 push**（push 請手動執行）。
+
+**一般 archive 專案同步（次要路徑）**：`./archive` 配下の任意の名前のアーカイブ用リポジトリが存在する場合、`docs` 内の `.md` ファイルをコピーし、Git コミットを行う。
 根據作業系統執行對應指令：
 - **Mac**: `uv run skills/sync_archive.py`
 - **Windows**: `docker exec cui-tools uv run skills/sync_archive.py`
