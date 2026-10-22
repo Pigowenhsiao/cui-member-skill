@@ -748,7 +748,7 @@
 | Azure One（語音稿）| （正式名稱未確認）| 英偉達新人型機器人，預計 2027Q1 上市 |
 | OpenShel（語音稿）| （正式名稱未確認）| 英偉達代理式 AI 安全架構 |
 | DSX Max LPS | DSX Max LPS | 英偉達電力管理軟體；同等 token 產出省電 30% |
-| Virubin AI 機架 | Vera Rubin AI 機架 | DSX Pod 含 7 組 Vera Rubin 機架 |
+| Virubin AI 機架 | Vera Rubin AI 機架 | DSX POD 含 7 組 Vera Rubin 機架 |
 | 调整美股收益 | 調整後每股收益 | 特斯拉 Q3 調整後 EPS **0.48 美元**（Whisper 稿誤植為 0.33）；GAAP EPS 0.22 美元 |
 | 每股收益3.83（Meta）| GAAP 稀釋後 EPS 3.83 美元 | Meta Q3；**不要**與調整後 EPS 混淆 |
 | 调整后每股收益7.4 | Non-GAAP 調整後 EPS 7.40 美元 | Meta Q3；逐字稿稱為扣除 98.9 億一次性訴訟費用後的結果 |

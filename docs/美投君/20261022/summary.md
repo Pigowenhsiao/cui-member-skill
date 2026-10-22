@@ -138,7 +138,7 @@
 
 ---
 
-## 四、黃仁勳 GTC 柏林：整條 AI 產業鏈與 DSX Pod
+## 四、黃仁勳 GTC 柏林：整條 AI 產業鏈與 DSX POD
 
 > 本次 DSX 發表會（AI 工廠參考架構平台）**最核心的兩個型號／架構用語為 `DSX POD` 與 `DSX Ready`**：
 > - **DSX POD**：AI 工廠的集裝箱式部署單元（7 組 Vera Rubin 機架），把施工前置到工廠
