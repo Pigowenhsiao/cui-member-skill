@@ -18,7 +18,7 @@
 | 三星電子 | Samsung Electronics | 005930.KS | 三星電字 | 韓國半導體與消費電子巨頭 |
 | 英特爾 | Intel | INTC、因特爾、應特爾、印爾達 | 美國老牌晶片廠，18A 製程轉型中；易與「輝達（NVIDIA）」混淆 |
 | 超微半導體 | AMD | AMD | — | GPU 與 CPU 設計公司，英偉達主要競爭者 |
-| 美滿電子 | Marvell Technology | MRVL | 賣為、賣味、麥威爾、賣未來 | 定制晶片 (Custom Silicon) 設計公司，進攻型成長股 |
+| 美滿電子 | Marvell Technology | MRVL | 賣為、賣味、麥威爾、賣未來、Marve ll | 定制晶片 (Custom Silicon) 設計公司，進攻型成長股 |
 | 康寧 | Corning | GLW | 康凝、康檸 | 光通訊與特殊玻璃巨頭，穩健防禦型標的 |
 | 博通 | Broadcom | AVGO | 播通、泊通 | 半導體與基礎設施軟體公司 |
 | 甲骨文 | Oracle | ORCL | 加骨文、假骨文、克里姆林宫 | 企業軟體與雲端基礎設施巨頭 |
@@ -35,7 +35,7 @@
 | 閃迪 | SanDisk / Western Digital | WDC | 山地、散地 | NAND 快閃記憶體公司（妖股特性） |
 | 鎧俠 | Kioxia | — | 凱俠、開下 | 日本 NAND 快閃記憶體公司 (原東芝存儲) |
 | 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新 | 中國國產 DRAM 記憶體龍頭 |
-| 阿斯麥 | ASML | ASML | 啊死麥、阿司麥 | 荷蘭光刻機壟斷企業 |
+| 阿斯麥 | ASML | ASML | 啊死麥、阿司麥、艾斯摩爾 | 荷蘭光刻機壟斷企業 |
 | CrowdStrike | CrowdStrike | CRWD | Crystrike、COWE | 美股網絡安全巨頭 |
 | CoreWeave | CoreWeave | CRWV | Cowive、Cowe | AI 算力雲服務公司 |
 | Cloudflare | Cloudflare | NET | — | 網路安全與 CDN 服務商 |
@@ -639,5 +639,23 @@
 | 華納兄弟的《發現號》| 華納兄弟探索（Discovery, WBD）| 公司與頻道名稱混讀 |
 | 底棲魚 | 抄底標的 | 同二十二集 |
 | 主線 / 底層程式碼 | 核心投資理念（底層程式碼）| 講者自創的「主線思維」概念 |
+
+> **新增日期**：2026-10-22
+
+---
+
+## 二十四、本集新增（玩股網楚狂人）
+
+| 誤識別 | 正確用詞 | 說明 |
+|:---|:---|:---|
+| HardMarks / Halmarks / Hourmarks / Hard Marks | Howard Marks（霍華·馬克思）| 橡樹資本管理公司創辦人（KuY4BBwbm98、jEaHRMHA89s）|
+| Radario | Ray Dalio（瑞·達利歐）| 橋水基金創辦人（jEaHRMHA89s）|
+| Cloude | Claude | Anthropic 的 AI 模型名稱（iQhSbG-Jcck）|
+| RT50 | RTX 5090 | NVIDIA 顯示卡型號（p8LOIK0Pfzs）|
+| NASAC | NASDAQ | 美國股票交易市場名稱（LlohstiwQvw）|
+| 彼得林區 | 彼得·林區（Peter Lynch）| 投資人姓名（SzDAyEvIY4w、HJJotHuPKL4、Mt27Vqgybio、LuiSjsj3fRA）|
+| 理察賽勒 | 理查·塞勒（Richard Thaler）| 經濟學家姓名（EDqwdOk9c9Q）|
+| 網捕策略 | 動能策略（Momentum Strategy）| 同段提及美國股市動能小組與 STOCKMOMENTUM（ObzI1WCrKzA）|
+| 股債雙疊盤 | 股債雙殺盤 | 描述股債市場同時下跌（bj8y11ik9r4）|
 
 > **新增日期**：2026-10-22
