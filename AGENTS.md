@@ -24,6 +24,8 @@
 > | `/compare` | Step 5: 觀點對比 (每日新聞綜述) | （無） |
 > | `/sync` | Step 6: 同步至 Gist | （無） |
 > | `/archive` | Step 7: アーカイブ同期 | （無） |
+> | `/analyze_stock` | 美股財報分析：輸入股票名稱/代碼，上網搜尋最近 4 季財報並完成價值投資框架分析 | 股票名稱或代碼 |
+> | `/analyze_twstock` | 台股財報分析：輸入台股代碼（4位數）或名稱，上網搜尋財報、月營收、新聞，完成台股價值投資框架分析 | 台股代碼（如 2330）或名稱（如 台積電）|
 
 ### 自動掃描 (Auto-Scan) — `/scan_cui` & `/scan_meitou`
 如果你希望 AI Agent 獨立去 YouTube 抓取個別頻道的最新影片並處理，請使用這兩個指令。
@@ -44,6 +46,15 @@
 ### Step 3: 語音轉文字 (Transcription) — `/transcribe`
 利用 `skills/transcribe.py` 將整理好的音訊轉為文字。
 > **參閱文件**：`skills/prompts/transcribe.prompt.md`
+
+**字幕優先 (Subtitle-first)**：若該影片在 YouTube 上有自動生成字幕，優先改用字幕作為文字稿來源——速度更快、專有名詞正確率顯著優於 Whisper。
+```bash
+# 由 YouTube URL 直接下載自動字幕並轉為純文字稿
+uv run skills/subtitle_to_text.py "https://youtu.be/VIDEO_ID"
+# 由本地 .vtt 轉換
+uv run skills/subtitle_to_text.py path/to/VIDEO_ID.zh-Hant.vtt
+```
+產生的 `.txt` 可直接餵給 Step 4。
 
 ### Step 4: 摘要與分析 (Summarization & Analysis) — `/summarize`
 這一步是你展現分析能力的時候。

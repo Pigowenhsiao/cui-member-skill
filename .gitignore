@@ -145,16 +145,31 @@ vite.config.ts.timestamp-*
 tmp/*
 temp/*
 
-# Audio files
+# Audio files (too large for git)
 *.mp3
 *.wav
 *.m4a
+docs/**/*.mp3
+docs/**/*.wav
+docs/**/*.m4a
+
+# VTT subtitles (optional to track, keeping ignored for now)
+docs/**/*.vtt
 
 # Python
 __pycache__/
 *.pyc
 .venv/
 .env
+
+# Docs output - track these specific file types
+!docs/**/*.md
+!docs/**/*.txt
+!docs/**/*.json
+!docs/**/*.info.json
+
+# Exceptions within docs/
+docs/GIST_README.md
 
 cookies.*.txt
 cookies.txt
