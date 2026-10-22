@@ -194,14 +194,15 @@ DECORATION_BRACKETS = (
 def clean_title(raw: str) -> str:
     """影片標題/H1 から装飾を除去する"""
     title = raw.strip()
-    # 節目番号は括弧を外して先頭に置く
+    # 節目番号は括弧を外して先頭に置く（装飾記号・分類ラベルより先に現れる場合あり）
     episode = ""
-    match = re.match(r"^【(EP\d+)】\s*", title)
-    if match:
-        episode = f"{match.group(1)} "
-        title = title[match.end() :]
-    # 先頭の装飾記号・分類ラベルを繰り返し除去
+    # 先頭の装飾記号・分類ラベル・節目番号を繰り返し除去
     while True:
+        match = re.match(r"^【(EP\d+)】\s*", title)
+        if match:
+            episode = f"{match.group(1)} "
+            title = title[match.end() :]
+            continue
         stripped = re.sub(r"^(🔴\s*|📺\s*)", "", title)
         for label in DECORATION_BRACKETS:
             if stripped.startswith(label):
