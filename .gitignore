@@ -173,4 +173,7 @@ docs/GIST_README.md
 
 cookies.*.txt
 cookies.txt
+Cookies/*.txt
+Cookies/*.json
+nul
 *.mp4.part
