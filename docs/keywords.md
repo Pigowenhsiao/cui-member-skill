@@ -749,6 +749,8 @@
 | DSX Max LPS | DSX Max LPS | 英偉達電力管理軟體；同等 token 產出省電 30% |
 | Virubin AI 機架 | Vera Rubin AI 機架 | DSX Pod 含 7 組 Vera Rubin 機架 |
 | 调整美股收益 | 調整後每股收益 | 特斯拉 Q3 調整後 EPS **0.48 美元**（Whisper 稿誤植為 0.33）；GAAP EPS 0.22 美元 |
+| 每股收益3.83（Meta）| GAAP 稀釋後 EPS 3.83 美元 | Meta Q3；**不要**與調整後 EPS 混淆 |
+| 调整后每股收益7.4 | Non-GAAP 調整後 EPS 7.40 美元 | Meta Q3；逐字稿稱為扣除 98.9 億一次性訴訟費用後的結果 |
 | 苹果占上 5 万亿 | 蘋果重返 5 兆美元市值 | 週三收盤 |
 | 剑桥分析丑闻 | 劍橋分析（Cambridge Analytica）| Meta 陪審團認定違規逾 4,300 萬次、新墨西哥州判賠 250 億美元 |
 | 芬兰 荷兰 | 芬蘭、荷蘭 | 因 PHP 漏洞而將政府網站下線 |
