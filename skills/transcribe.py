@@ -123,19 +123,24 @@ def print_progress(current_sec: float, total_sec: float, prefix: str = "") -> No
 # 転写バックエンド
 # ---------------------------------------------------------------------------
 
-def _check_cuda_available() -> bool:
-    """檢測 CUDA/GPU 是否可用於 Whisper."""
-    try:
-        import torch
-        return torch.cuda.is_available()
-    except ImportError:
-        return False
+def _cuda_model():
+    """延遲載入並快取 CUDA whisper 模型。"""
+    import whisper
+    return whisper.load_model("medium", device="cuda")
 
 
 def transcribe_local(audio_path: str) -> str:
+    # Workaround: av.open in PyAV 16-18 does not accept metadata_errors.
+    # Patch it globally before faster-whisper loads.
+    import av
+    _orig_open = av.open
+    def _patched_open(*args, **kwargs):
+        kwargs.pop("metadata_errors", None)
+        return _orig_open(*args, **kwargs)
+    av.open = _patched_open
+
     is_mac_arm = platform.system() == "Darwin" and platform.machine() == "arm64"
     total_sec = get_audio_duration(audio_path)
-    cuda_available = _check_cuda_available()
 
     if is_mac_arm:
         # ── Apple Silicon: 使用 mlx-whisper GPU 加速 ──────────────────────
@@ -163,34 +168,33 @@ def transcribe_local(audio_path: str) -> str:
         print(file=sys.stderr)
         return format_segments(seg_dicts)
 
-    elif cuda_available:
-        # ── CUDA GPU: 使用 openai-whisper + CUDA 加速 ─────────────────────
-        print(f"🚀 偵測到 NVIDIA GPU，使用 openai-whisper CUDA 加速轉譯 (音訊: {audio_path})...", file=sys.stderr)
-        import whisper
-        model_name = os.getenv("WHISPER_MODEL", "medium")
-        print(f"載入模型: {model_name} on CUDA", file=sys.stderr)
-
-        model = whisper.load_model(model_name, device="cuda")
-        result = model.transcribe(audio_path, language="zh", fp16=True)
-
-        seg_dicts = []
-        for seg in result.get("segments", []):
-            start = seg.get("start", 0.0)
-            end   = seg.get("end",   0.0)
-            text  = seg.get("text",  "")
-            print_progress(end, total_sec, prefix="轉譯進度 ")
-            print(f"\n[{start:06.1f}s -> {end:06.1f}s] {text.strip()}", file=sys.stderr)
-            seg_dicts.append({"text": text, "start": start, "end": end})
-
-        print(file=sys.stderr)
-        return format_segments(seg_dicts)
-
     else:
+        # ── CUDA GPU: 使用 openai-whisper + CUDA 加速 ─────────────────────
+        try:
+            print(f"🚀 嘗試使用 NVIDIA GPU + CUDA 加速轉譯 (音訊: {audio_path})...", file=sys.stderr)
+            model = _cuda_model()
+            result = model.transcribe(audio_path, language="zh", fp16=True)
+
+            seg_dicts = []
+            for seg in result.get("segments", []):
+                start = seg.get("start", 0.0)
+                end   = seg.get("end",   0.0)
+                text  = seg.get("text",  "")
+                print_progress(end, total_sec, prefix="轉譯進度 ")
+                print(f"\n[{start:06.1f}s -> {end:06.1f}s] {text.strip()}", file=sys.stderr)
+                seg_dicts.append({"text": text, "start": start, "end": end})
+
+            print(file=sys.stderr)
+            return format_segments(seg_dicts)
+        except Exception:
+            # CUDA 不可用時，靜態降級至 CPU fallback
+            pass
         # ── CPU fallback: faster-whisper ─────────────────────────────────
-        print(f"⚠️ 無 GPU 支援，使用 CPU 版 faster-whisper (型號: medium) 進行語音識別 (音訊: {audio_path})...", file=sys.stderr)
+        cpu_model_name = os.getenv("WHISPER_MODEL", "small")
+        print(f"⚠️ 無 GPU 支援，使用 CPU 版 faster-whisper (型號: {cpu_model_name}) 進行語音識別 (音訊: {audio_path})...", file=sys.stderr)
         from faster_whisper import WhisperModel
 
-        model = WhisperModel("medium", device="cpu", compute_type="int8")
+        model = WhisperModel(cpu_model_name, device="cpu", compute_type="int8")
         segments_gen, info = model.transcribe(audio_path, beam_size=5, language="zh")
         print(f"偵測語言為 '{info.language}'，信心度 {info.language_probability:.2f}", file=sys.stderr)
 
@@ -315,7 +319,9 @@ def main():
         print("後續請由 AI Agent 將此文本檔案與音訊一併整理至對應分類目錄下。")
 
     except Exception as e:
+        import traceback
         print(f"\n文字轉換過程中發生錯誤: {e}", file=sys.stderr)
+        traceback.print_exc()
         sys.exit(1)
 
 if __name__ == "__main__":
