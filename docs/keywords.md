@@ -717,7 +717,7 @@
 | pot / POTR | PLTR（Palantir）| 講者以「軟體鬼故事已被證偽、已翻倍」為例（逐字稿作 pot）|
 | 包工頭 / NBS covid / covid | CoreWeave | 積壓訂單 1,290 億美元、再投 600 億、20% 預付只需借 230 億 |
 | Terrafiber | TerraFiber | 特斯拉與 SpaceX 共建，資本支出大頭轉移至此 |
-| DSXPOD | DSX Pod | 英偉達新部署技術，1 GW data center 由 4–6 個月縮短到 3–4 個月 |
+| DSXPOD | DSX POD | 英偉達 AI 工廠集裝箱式部署單元（7 組 Vera Rubin 機架）；1 GW data center 由 4–6 個月縮短到 3–4 個月；2027 年初交付 |
 | Muse | Muse | Meta 生成式 AI 助手與廣告工具；1,000 萬人設置、250 萬人日活 |
 | 智譜 | 智譜（Zhipu AI）| 自高點跌 85% |
 | 胎教經濟學 | （講者造詞）| 指以行政指導「按住股市」的政策取向 |
@@ -744,8 +744,9 @@
 | Nex DC | NEST DC | 澳洲 data center 營運商；墨爾本供電工程延誤、下調 2027 財年營收預期、股價 -40% 以上 |
 | 供力降价出租 / 供过余求 | 供過於求 | Griffin：GPU 租賃價格下跌可能不是線性的，而是斷崖式 |
 | 算力过剩 | 算力過剩 | Ken Griffin 觀點；「局部過剩」語境 |
-| Azure One | （型號待核對）| 英偉達新人型機器人，預計 2027Q1 上市 |
-| OpenShel | （型號待核對）| 英偉達代理式 AI 安全架構 |
+| DSX Ready | DSX Ready | NVIDIA DSX 發表會兩個核心用語之一（另一為 DSX POD）；機房就緒規格：電力／冷卻／網路／場地先備妥 |
+| Azure One（語音稿）| （正式名稱未確認）| 英偉達新人型機器人，預計 2027Q1 上市 |
+| OpenShel（語音稿）| （正式名稱未確認）| 英偉達代理式 AI 安全架構 |
 | DSX Max LPS | DSX Max LPS | 英偉達電力管理軟體；同等 token 產出省電 30% |
 | Virubin AI 機架 | Vera Rubin AI 機架 | DSX Pod 含 7 組 Vera Rubin 機架 |
 | 调整美股收益 | 調整後每股收益 | 特斯拉 Q3 調整後 EPS **0.48 美元**（Whisper 稿誤植為 0.33）；GAAP EPS 0.22 美元 |
