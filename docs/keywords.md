@@ -32,6 +32,7 @@
 | 帕蘭泰爾 | Palantir | PLTR | PLT、配螺太、怕蘭太爾 | 大數據分析與政府合約 AI 公司 |
 | 小火箭 | Rocket Lab | RKLB | — | 小型運載火箭公司，SpaceX 的平替 |
 | 大火箭 | SpaceX | SPCX | — | 馬斯克旗下太空運輸公司 |
+| Bloom Energy | Bloom Energy | BE | B1、B E | 固態氧化物燃料電池與現場供電公司；本集談及資料中心快速供電案例 |
 | 閃迪 | SanDisk / Western Digital | WDC | 山地、散地 | NAND 快閃記憶體公司（妖股特性） |
 | 鎧俠 | Kioxia | — | 凱俠、開下 | 日本 NAND 快閃記憶體公司 (原東芝存儲) |
 | 長鑫存儲 | CXMT | — (A股 IPO) | 長新、長星、常新 | 中國國產 DRAM 記憶體龍頭 |
