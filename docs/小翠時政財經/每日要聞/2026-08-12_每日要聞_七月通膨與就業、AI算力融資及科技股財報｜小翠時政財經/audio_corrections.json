@@ -1,0 +1,21 @@
+{
+  "source": "docs/小翠時政財經/每日要聞/2026-08-12_每日要聞_七月通膨與就業、AI算力融資及科技股財報｜小翠時政財經/audio.txt",
+  "total_corrections": 3,
+  "corrections": [
+    {
+      "error": "貝森",
+      "corrected": "貝森特",
+      "type": "whisper_error"
+    },
+    {
+      "pattern": "貝森特(?![（　])",
+      "replaced_with": "貝森特（Bessent，財政部長）",
+      "type": "terminology"
+    },
+    {
+      "pattern": "\\bCPO\\b",
+      "replaced_with": "CPO（共同封裝光學）",
+      "type": "terminology"
+    }
+  ]
+}

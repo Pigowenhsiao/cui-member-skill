@@ -40,7 +40,7 @@
 
 ### Step 2: 判斷與分類整理 (Categorization & Organizing) — `/organize`
 **請發揮你的 AI 判斷能力！**
-根據影片「標題」與「頻道資訊」，推斷該影片的 **影片類型 (Video Type)** 與 **日期 (Date)**，建立目錄並移動檔案。若無「小翠時政財經」關鍵字，預設歸類為「美投君」的每日更新。
+根據影片「標題」與「頻道資訊」，推斷影片類型與日期，建立 `<YYYY-MM-DD>_<分類名稱>_<影片標題>` 目錄；分類名稱使用影片類型，沒有影片類型時使用頻道名稱。主要分析報告命名為資料夾完整名稱加 `.md`，標題中的 Windows 不允許字元替換為 `-`。若無「小翠時政財經」關鍵字，預設歸類為「美投君」的每日更新。
 > **參閱文件**：`skills/prompts/organize.prompt.md`
 
 ### Step 3: 語音轉文字 (Transcription) — `/transcribe`
@@ -58,8 +58,7 @@ uv run skills/subtitle_to_text.py path/to/VIDEO_ID.zh-Hant.vtt
 
 ### Step 4: 摘要與分析 (Summarization & Analysis) — `/summarize`
 這一步是你展現分析能力的時候。
-閱讀指定的文字稿（`.txt`），並根據提示詞生成分析報告。
-> **參閱文件**：`skills/prompts/summarize.prompt.md` 以及 `skills/prompts/summarize.md`
+閱讀指定的文字稿（`.txt`），並根據提示詞生成分析報告；報告存放於影片資料夾，檔名為資料夾完整名稱加 `.md`。
 
 ### Step 5: 觀點對比分析 (Comparative Analysis) — `/compare`
 讀取各頻道最新產生的摘要，進行觀點對比與異同分析，將結果輸出至 `docs/每日新聞綜述/` 目錄。
@@ -80,7 +79,7 @@ uv run skills/subtitle_to_text.py path/to/VIDEO_ID.zh-Hant.vtt
 uv run skills/sync_vault.py
 ```
 > 執行前請確保 `.env` 中已設定 `VAULT_PATH`（Vault 根目錄，例如 `E:\obsidian`）與 `VAULT_DOCS_SUBDIR`（預設 `18-Wealth/docs`）。
-> 行為準則：**不覆寫** Vault 內既有筆記（保護人工校訂內容）、內容雜湊重複者不重複寫入、`index.md` 僅追加新日期列、`keywords.md` 保留 Vault 側的 `## Linked Notes` 節。腳本只 commit，**不 push**（push 請手動執行）。
+> 行為準則：**不覆寫** Vault 內既有筆記（保護人工校訂內容）、內容雜湊重複者不重複寫入、`index.md` 保留人工標題，新增日期列並更新已重新命名資料夾的連結、`keywords.md` 保留 Vault 側的 `## Linked Notes` 節。腳本只 commit，**不 push**（push 請手動執行）。
 
 **一般 archive 專案同步（次要路徑）**：`./archive` 配下の任意の名前のアーカイブ用リポジトリが存在する場合、`docs` 内の `.md` ファイルをコピーし、Git コミットを行う。
 根據作業系統執行對應指令：

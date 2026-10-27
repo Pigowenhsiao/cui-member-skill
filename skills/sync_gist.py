@@ -11,6 +11,15 @@ import sys
 import requests
 from dotenv import load_dotenv
 
+def normalized_date(folder_name):
+    """Return an ISO date for both legacy YYYYMMDD and named YYYY-MM-DD folders."""
+    if len(folder_name) >= 10 and folder_name[4:5] == "-" and folder_name[7:8] == "-":
+        return folder_name[:10]
+    if len(folder_name) >= 8 and folder_name[:8].isdigit():
+        value = folder_name[:8]
+        return f"{value[:4]}-{value[4:6]}-{value[6:8]}"
+    return folder_name
+
 def main():
     # 載入 .env 變數
     load_dotenv()
@@ -59,26 +68,26 @@ def main():
     if not summary_files:
         print("未找到任何摘要筆記 (*.md) 可供同步。")
     
-    # 按照分類進行分組，並找出最新的日期
-    # 目錄結構應類似 docs/<CategoryPath>/<Date>/<filename>.md
+    # 按照分類分組，以日期前綴挑選最新摘要資料夾
     latest_files = {} # category_name -> (date_dir, [filepaths])
     for filepath in summary_files:
         rel_path = os.path.relpath(filepath, "docs")
         path_parts = rel_path.split(os.sep)
-        
-        # 至少要包含 <分類>/<Date>/<filename>.md
+
+        # 至少要包含 <分類>/<日期資料夾>/<filename>.md
         if len(path_parts) >= 3:
             date_dir = path_parts[-2]
+            folder_date = normalized_date(date_dir)
             category_parts = path_parts[:-2]
             category_name = "_".join(category_parts)
-            
+
             if category_name not in latest_files:
                 latest_files[category_name] = (date_dir, [filepath])
             else:
-                current_latest_date = latest_files[category_name][0]
-                if date_dir > current_latest_date:
+                current_latest_date = normalized_date(latest_files[category_name][0])
+                if folder_date > current_latest_date:
                     latest_files[category_name] = (date_dir, [filepath])
-                elif date_dir == current_latest_date:
+                elif folder_date == current_latest_date:
                     latest_files[category_name][1].append(filepath)
             
     # 映射分類名稱到 Gist 上的特定檔名
@@ -94,23 +103,24 @@ def main():
     for category_name, (date_dir, filepaths) in latest_files.items():
         # 若在對應表中，使用指定的檔名；否則回退到 CategoryName.md
         gist_filename = category_to_filename.get(category_name, f"{category_name}.md")
-        combined_content = f"> **最後更新**: {date_dir}\n\n"
-        
+        last_updated = normalized_date(date_dir)
+        combined_content = f"> **最後更新**: {last_updated}\n\n"
+
         for filepath in sorted(filepaths):
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
                 if not content.strip():
-                    content = "\n" 
-                
+                    content = "\n"
+
                 # 若同日有多個檔案，加上檔案名稱作為子標題
                 if len(filepaths) > 1:
                     filename = os.path.basename(filepath)
                     combined_content += f"## {filename}\n\n"
-                
+
                 combined_content += content + "\n\n"
-                
+
         files_payload[gist_filename] = {"content": combined_content}
-        print(f"已載入 {len(filepaths)} 個檔案 -> {gist_filename} (最新版本: {date_dir})")
+        print(f"已載入 {len(filepaths)} 個檔案 -> {gist_filename} (最新版本: {last_updated})")
             
     if not files_payload:
         print("沒有任何檔案需要同步，程式結束。")
@@ -124,7 +134,7 @@ def main():
         "X-GitHub-Api-Version": "2022-11-28"
     }
     
-    # 取得目前的 Gist 狀態，清理舊的冗餘檔案 (例如 YYYYMMDD_*.md)
+    # 取得目前的 Gist 狀態，清理不在本次更新清單內的舊摘要檔
     print("\n正在取得目前的 Gist 狀態以清理舊檔案...")
     get_response = requests.get(url, headers=headers)
     if get_response.status_code == 200:

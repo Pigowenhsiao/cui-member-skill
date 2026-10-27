@@ -1,0 +1,21 @@
+{
+  "source": "docs/小翠時政財經/每日要聞/2026-08-31_每日要聞_【每日要聞】尼泊爾災情處理直接打臉中國！今年的G20都是好戲！AI時代終於暴露了華爾街的愚蠢！老淚縱橫，英特爾代工有突破！/audio.txt",
+  "total_corrections": 3,
+  "corrections": [
+    {
+      "error": "貝森",
+      "corrected": "貝森特",
+      "type": "whisper_error"
+    },
+    {
+      "error": "沃什",
+      "corrected": "華許（Kevin Warsh）",
+      "type": "whisper_error"
+    },
+    {
+      "pattern": "貝森特(?![（　])",
+      "replaced_with": "貝森特（Bessent，財政部長）",
+      "type": "terminology"
+    }
+  ]
+}

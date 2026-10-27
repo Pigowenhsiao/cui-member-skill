@@ -22,7 +22,7 @@
 | `/download <YouTube URL>` | Step 1: 下載音訊與元數據 | YouTube URL |
 | `/organize <mp3路徑>` | Step 2: AI 判斷類型與日期，建立目錄並移動檔案 | `.mp3` 檔案路徑 |
 | `/transcribe <mp3路徑>` | Step 3: 語音轉文字，產生 `.txt` 文字稿 | `.mp3` 檔案路徑 |
-| `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告 `summary.md` | `.txt` 檔案路徑 |
+| `/summarize <txt路徑>` | Step 4: 讀取文字稿，輸出繁體中文投資分析報告（`<資料夾名稱>.md`） | `.txt` 檔案路徑 |
 | `/compare` | Step 5: 讀取各頻道最新摘要，產生觀點對比與異同分析 (`每日新聞綜述`) | （無） |
 | `/sync` | Step 6: 將各分類最新的筆記自動同步至 GitHub Gist（維持單一最新檔案，清理舊檔） | （無） |
 | `/archive` | Step 7: 掃描 `./archive` 配下的 Git 專案並同步文件（安全起見需手動 Push） | （無） |
@@ -236,16 +236,16 @@ uv run skills/download_audio.py --browser firefox "https://www.youtube.com/watch
 
 **Step 2: 建立分類目錄並移動檔案**（交由 AI Agent 自動判斷）
 ```
-./docs/<Channel>/<VideoType>/<Date>/  例如: ./docs/小翠時政財經/會員直播/20260717/
+./docs/<Channel>/<VideoType>/<YYYY-MM-DD>_<分類名稱>_<影片標題>/  例如: ./docs/小翠時政財經/會員直播/2026-07-17_會員直播_<影片標題>/
 ```
 
 **Step 3: 語音轉文字**
 ```bash
-uv run skills/transcribe.py "./docs/小翠時政財經/會員直播/20260717/audio_file.mp3"
+uv run skills/transcribe.py "./docs/小翠時政財經/會員直播/2026-07-17_會員直播_<影片標題>/audio_file.mp3"
 ```
 
 **Step 4: 摘要與分析**
-依照 `skills/prompts/summarize.md` 的提示詞，讓 AI Agent 讀取 `.txt` 並生成 `summary.md` 報告。
+依照 `skills/prompts/summarize.md` 的提示詞，將報告保存為影片資料夾同名的 `.md` 檔案。
 
 **Step 5: 觀點對比分析 (每日新聞綜述)**
 根據 `skills/prompts/compare.prompt.md` 的指示，讓 AI Agent 比較最新的「小翠時政財經」與「美投侃新闻」摘要，產生對比分析報告。

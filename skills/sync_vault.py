@@ -18,13 +18,13 @@ cui-member-skill の docs/ ツリーを Obsidian Vault へミラーする（Step
   VAULT_DOCS_SUBDIR    任意。既定 "18-Wealth/docs"
 
 仕様:
-  - docs/<カテゴリ>/<日付>/... → <VAULT>/<VAULT_DOCS_SUBDIR>/<カテゴリ>/<日付>/...
+  - docs/<カテゴリ>/<日付フォルダ>/... → <VAULT>/<VAULT_DOCS_SUBDIR>/<カテゴリ>/<日付フォルダ>/...
+    日付フォルダは旧 YYYYMMDD 形式と YYYY-MM-DD_<分類>_<タイトル> 形式を扱う。
     先頭カテゴリ "小翠時政財經" のみ取り除く（Vault 側の分類名に合わせる）。
   - 既存ファイルは上書きしない（Vault 側で手直し済みのノートを保護する）。
   - LF 正規化後の sha1 が Vault 側に既に存在する場合も複製しない。
   - docs/keywords.md は Vault 側の "## Linked Notes" 節を保ったまま差し替える。
-  - index.md は既存行を保持したまま、新規日付の行だけを追加する
-    （既存行のタイトルは人手校訂済みのため再生成しない）。
+  - index.md は既存行を保持し、新規日付を追加し、移動済みソースのリンク先を更新する。
   - Git は対象パスだけをステージして commit する。push は行わない
     （セキュリティ方針：push は手動）。
 """
@@ -61,9 +61,10 @@ INDEX_CATEGORIES = {
 }
 
 DATE_DIR_RE = re.compile(r"^(\d{4})(\d{2})(\d{2})([a-z]?)$")
+NAMED_DATE_DIR_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})_.+$")
 INDEX_ROW_RE = re.compile(
     r"^\|\s*(\d{4}-\d{2}-\d{2})\s*\|\s*\[(?P<title>.*?)\]"
-    r"\(\./(?P<dir>\d{8}[a-z]?)/summary\.md\)\s*\|$"
+    r"\(\./(?P<dir>[^/]+)/(?P<file>.+\.md)\)\s*\|$"
 )
 
 
@@ -226,7 +227,7 @@ def is_generic_title(title: str) -> bool:
 
 
 def extract_title(summary_path: Path) -> str:
-    """summary.md から 1 行のタイトルを抽出する"""
+    """Extract the title from a primary summary note."""
     text = read_text(summary_path)
     candidates: list[str] = []
     # 基本情報テーブル（太字あり／なしの両方）
@@ -250,14 +251,25 @@ def extract_title(summary_path: Path) -> str:
     return clean_title(candidates[0]) if candidates else ""
 
 
-def dir_date(dir_name: str) -> str | None:
-    """20261021 → 2026-10-21"""
-    match = DATE_DIR_RE.match(dir_name)
-    if not match:
-        return None
-    year, month, day, _ = match.groups()
-    return f"{year}-{month}-{day}"
+def primary_note(child: Path) -> Path | None:
+    named = child / f"{child.name}.md"
+    if named.exists():
+        return named
+    legacy = child / "summary.md"
+    return legacy if legacy.exists() else None
 
+
+def dir_date(dir_name: str) -> str | None:
+    """Extract dates from legacy YYYYMMDD folders and YYYY-MM-DD_named folders."""
+    match = DATE_DIR_RE.match(dir_name)
+    if match:
+        year, month, day, _ = match.groups()
+        return f"{year}-{month}-{day}"
+    match = NAMED_DATE_DIR_RE.match(dir_name)
+    if match:
+        year, month, day = match.groups()
+        return f"{year}-{month}-{day}"
+    return None
 
 def section_key(day: str, unit: str) -> str:
     """日付が属するセクションのキー"""
@@ -328,13 +340,14 @@ def add_row_to_blocks(
     blocks: list[tuple[str | None, list[str]]],
     day: str,
     name: str,
+    filename: str,
     title: str,
     order: str,
     unit: str,
     header: str,
 ) -> list[tuple[str | None, list[str]]]:
     """日付セクションの表に 1 行追加する"""
-    row = f"| {day} | [{title}](./{name}/summary.md) |"
+    row = f"| {day} | [{title}](./{name}/{filename}) |"
     key = section_key(day, unit)
     result = list(blocks)
 
@@ -369,7 +382,7 @@ def add_row_to_blocks(
 
 
 def update_index(category_dir: Path, spec: dict) -> int:
-    """index.md に未掲載の日付の行を追加する。追加件数を返す"""
+    """Add missing rows and refresh links for renamed source folders."""
     index_path = category_dir / "index.md"
     if not index_path.exists():
         return 0
@@ -377,32 +390,57 @@ def update_index(category_dir: Path, spec: dict) -> int:
     order = spec["order"]
     unit = spec["unit"]
     header = spec["header"]
-
     text = read_text(index_path)
     lines = text.split("\n")
-    listed = {m.group("dir") for line in lines if (m := INDEX_ROW_RE.match(line))}
+    existing_rows = [
+        (index, match)
+        for index, line in enumerate(lines)
+        if (match := INDEX_ROW_RE.match(line))
+    ]
+    new_rows: list[tuple[str, str, str, str]] = []
+    updated = 0
 
-    new_rows: list[tuple[str, str, str]] = []
     for child in sorted(category_dir.iterdir()):
-        if not child.is_dir() or child.name in listed:
+        if not child.is_dir():
             continue
-        summary = child / "summary.md"
-        if not summary.exists():
-            continue
+        note = primary_note(child)
         day = dir_date(child.name)
-        if day is None:
+        if note is None or day is None:
             continue
-        title = extract_title(summary)
+        title = extract_title(note)
         if not title:
             continue
-        new_rows.append((day, child.name, title))
 
-    if not new_rows:
+        previous = next(
+            ((index, match) for index, match in existing_rows if match.group("dir") == child.name),
+            None,
+        )
+        if previous is None:
+            previous = next(
+                (
+                    (index, match)
+                    for index, match in existing_rows
+                    if match.group(1) == day and match.group("title") == title
+                ),
+                None,
+            )
+        desired = f"| {day} | [{title}](./{child.name}/{note.name}) |"
+        if previous is not None:
+            index, _match = previous
+            if lines[index] != desired:
+                lines[index] = desired
+                updated += 1
+            continue
+        new_rows.append((day, child.name, note.name, title))
+
+    if not new_rows and not updated:
         return 0
 
     blocks = split_blocks(lines)
-    for day, name, title in new_rows:
-        blocks = add_row_to_blocks(blocks, day, name, title, order, unit, header)
+    for day, name, filename, title in new_rows:
+        blocks = add_row_to_blocks(
+            blocks, day, name, filename, title, order, unit, header
+        )
 
     out: list[str] = []
     for heading, body in blocks:
@@ -411,9 +449,11 @@ def update_index(category_dir: Path, spec: dict) -> int:
         out.extend(body)
 
     write_text(index_path, "\n".join(out))
-    for day, name, title in new_rows:
+    for day, name, _filename, title in new_rows:
         print(f"  index 行追加: {day} {title}")
-    return len(new_rows)
+    if updated:
+        print(f"  index 連結更新: {updated} 行")
+    return len(new_rows) + updated
 
 
 def commit(vault: Path, subdir: str, changed: bool) -> str:

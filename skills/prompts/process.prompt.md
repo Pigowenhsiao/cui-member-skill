@@ -12,12 +12,12 @@ description: '一鍵完成全頻道掃描與任務排程：掃描、下載、分
 #### Step 1: 掃描小翠時政財經 (`/scan_cui`)
 1. 執行 `/scan_cui` 任務 (參考 `skills/prompts/scan_cui.prompt.md`)。
 2. 該任務會去檢查是否有最新影片，若有，會一路執行到摘要產生 (`/download` -> `/organize` -> `/transcribe` -> `/summarize`)。若沒有新影片，則會略過處理。
-3. **請記錄**在 Step 1 中是否有真正下載並產生新的摘要 (`summary.md`)。
+3. **請記錄**在 Step 1 中是否有真正下載並產生新的摘要筆記（檔名為影片資料夾名稱加 `.md`）。
 
 #### Step 2: 掃描美投侃新闻 (`/scan_meitou`)
 1. 執行 `/scan_meitou` 任務 (參考 `skills/prompts/scan_meitou.prompt.md`)。
 2. 該任務會去檢查是否有最新影片，若有，會一路執行到摘要產生 (`/download` -> `/organize` -> `/transcribe` -> `/summarize`)。若沒有新影片，則會略過處理。
-3. **請記錄**在 Step 2 中是否有真正下載並產生新的摘要 (`summary.md`)。
+3. **請記錄**在 Step 2 中是否有真正下載並產生新的摘要筆記（檔名為影片資料夾名稱加 `.md`）。
 
 #### Step 3: 條件判斷與後續處理
 1. 如果在 **Step 1** 或 **Step 2** 中，**有任何一部新影片**被下載並產生了新摘要：

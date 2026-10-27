@@ -27,7 +27,7 @@ description: '自動掃描美投侃新闻最新影片，判斷是否已下載，
 1. **下載**: 執行 `/download` (或使用 `skills/download_audio.py`) 下載音訊。
 2. **分類**: 執行 `/organize` 將檔案移至 `docs/美投君/...`。
 3. **轉譯**: 執行 `/transcribe` 產生文字稿。
-4. **摘要**: 執行 `/summarize` 產生投資分析報告 (`summary.md`)。
+4. **摘要**: 執行 `/summarize` 產生投資分析報告，檔名使用影片資料夾名稱加 `.md`。
 5. **結束任務**: 若你是單獨執行 `/scan_meitou`，請到此（完成 `/summarize`）為止，向使用者回報「美投侃新闻：新影片已下載並完成摘要」，**不要**接著執行 `/scan_cui`、`/compare`、`/sync` 或 `/archive`。
 
 ### 注意

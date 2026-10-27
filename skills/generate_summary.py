@@ -6,7 +6,7 @@
 # ]
 # ///
 """
-自動生成 summary.md 摘要腳本
+自動生成影片資料夾同名 Markdown 摘要
 支援 OpenAI API / Azure OpenAI / 本地模型（未來擴展）
 
 用法：
@@ -268,14 +268,15 @@ def generate_summary(audio_path: str, info_path: str, category: str, out_dir: st
 
     # 修正 prompt 中的預留位置
     base_name = f"{safe_title} [{video_id}]"
-    rel_txt = f"docs/{category}/{video_id[:8]}/{base_name}.txt"
-    rel_info = f"docs/{category}/{video_id[:8]}/{base_name}.info.json"
+    rel_txt = os.path.relpath(audio_path).replace(os.sep, "/")
+    rel_info = os.path.relpath(info_path).replace(os.sep, "/")
     summary_text = summary_text.replace("{rel_txt_path}", rel_txt)
     summary_text = summary_text.replace("{rel_info_path}", rel_info)
 
-    # 寫入 summary.md
+    # 以影片資料夾完整名稱作為摘要檔名
     os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, "summary.md")
+    note_name = os.path.basename(os.path.normpath(out_dir)) + ".md"
+    out_path = os.path.join(out_dir, note_name)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(summary_text)
 
@@ -289,7 +290,7 @@ def generate_summary(audio_path: str, info_path: str, category: str, out_dir: st
 
 
 def main():
-    parser = argparse.ArgumentParser(description="自動生成 summary.md 摘要")
+    parser = argparse.ArgumentParser(description="自動生成影片資料夾同名 Markdown 摘要")
     parser.add_argument("audio_file", help="文字稿檔案（.txt）")
     parser.add_argument("info_file", help="影片 metadata（.info.json）")
     parser.add_argument("category", help="分類（如：每日要聞、會員直播、AI技術教學）")

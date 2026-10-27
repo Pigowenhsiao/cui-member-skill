@@ -1,0 +1,11 @@
+{
+  "source": "docs/小翠時政財經/每日要聞/2026-08-07_每日要聞_中美互相出牌、Meta遭重罰與美國光通信財報｜小翠時政財經/audio.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "error": "沃什",
+      "corrected": "華許（Kevin Warsh）",
+      "type": "whisper_error"
+    }
+  ]
+}

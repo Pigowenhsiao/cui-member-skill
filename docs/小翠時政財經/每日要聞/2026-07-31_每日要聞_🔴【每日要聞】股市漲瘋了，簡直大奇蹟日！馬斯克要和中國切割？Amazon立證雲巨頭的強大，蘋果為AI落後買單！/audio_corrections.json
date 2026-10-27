@@ -1,0 +1,21 @@
+{
+  "source": "docs/小翠時政財經/每日要聞/2026-07-31_每日要聞_🔴【每日要聞】股市漲瘋了，簡直大奇蹟日！馬斯克要和中國切割？Amazon立證雲巨頭的強大，蘋果為AI落後買單！/audio.txt",
+  "total_corrections": 3,
+  "corrections": [
+    {
+      "error": "貝森",
+      "corrected": "貝森特",
+      "type": "whisper_error"
+    },
+    {
+      "error": "沃什",
+      "corrected": "華許（Kevin Warsh）",
+      "type": "whisper_error"
+    },
+    {
+      "pattern": "貝森特(?![（　])",
+      "replaced_with": "貝森特（Bessent，財政部長）",
+      "type": "terminology"
+    }
+  ]
+}
