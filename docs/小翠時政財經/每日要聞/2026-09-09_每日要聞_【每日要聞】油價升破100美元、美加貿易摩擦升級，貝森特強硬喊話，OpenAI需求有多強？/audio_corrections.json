@@ -1,0 +1,16 @@
+{
+  "source": "docs/小翠時政財經/每日要聞/2026-09-09_每日要聞_【每日要聞】油價升破100美元、美加貿易摩擦升級，貝森特強硬喊話，OpenAI需求有多強？/audio.txt",
+  "total_corrections": 2,
+  "corrections": [
+    {
+      "error": "貝森",
+      "corrected": "貝森特",
+      "type": "whisper_error"
+    },
+    {
+      "pattern": "貝森特(?![（　])",
+      "replaced_with": "貝森特（Bessent，財政部長）",
+      "type": "terminology"
+    }
+  ]
+}

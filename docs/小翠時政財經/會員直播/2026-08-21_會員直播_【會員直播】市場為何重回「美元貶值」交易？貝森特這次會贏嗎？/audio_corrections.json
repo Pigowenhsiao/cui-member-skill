@@ -1,0 +1,11 @@
+{
+  "source": "docs/小翠時政財經/會員直播/2026-08-21_會員直播_【會員直播】市場為何重回「美元貶值」交易？貝森特這次會贏嗎？/audio.txt",
+  "total_corrections": 1,
+  "corrections": [
+    {
+      "pattern": "\\bAI\\b",
+      "replaced_with": "AI（人工智慧）",
+      "type": "terminology"
+    }
+  ]
+}

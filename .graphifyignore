@@ -1,0 +1,4 @@
+graphify-out
+.graphify*
+STATUS_*.md
+docs/graphify_vault_builder.py
